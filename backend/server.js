@@ -1,11 +1,24 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-require('dotenv').config();
+require("dotenv").config();
 
-const ordenesRoutes = require('./src/routes/ordenes.routes');
+const ordenesRoutes = require("./src/routes/ordenesRoutes");
+const usuarioRoutes = require("./src/routes/usuariosRoutes");
+const proveedorRoutes = require("./src/routes/proveedoresRoutes");
+const productosRoutes = require("./src/routes/productosRoutes");
+const ordenesSugeridadIaRoutes = require("./src/routes/ordenesSugeridasIaRoutes");
+const inventarioRoutes = require("./src/routes/inventarioRoutes");
+const ventasRoutes = require("./src/routes/ventasRoutes");
 
 app.use(express.json());
-app.use('/api/ordenes', ordenesRoutes);
+
+app.use("/api/ordenes", ordenesRoutes);
+app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/proveedores", proveedorRoutes);
+app.use("/api/productos", productosRoutes);
+app.use("/api/ordenes-sugeridad-ia", ordenesSugeridadIaRoutes);
+app.use("/api/inventario", inventarioRoutes);
+app.use("/api/ventas", ventasRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

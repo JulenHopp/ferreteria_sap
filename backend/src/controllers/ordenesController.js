@@ -1,4 +1,4 @@
-const { getOrdenes } = require('../models/ordenes.model');
+const { getOrdenes } = require('../models/ordenesModel');
 
 async function listarOrdenes(req, res) {
   try {
