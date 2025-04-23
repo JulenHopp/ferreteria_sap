@@ -1,12 +1,26 @@
 import './App.css'
-import TablaEjemplo from "./pages/inventario"
-import LoginPage from "./pages/login"
+import { useNavigate, Routes, Route } from 'react-router-dom';
+
+import LoginPage from './pages/LoginPage';
+import Inventario from './pages/Inventario';
+
+import { Button } from '@ui5/webcomponents-react';
 
 function App() {
-
+  const navigate = useNavigate();
   return (
     <>
-      <LoginPage />
+    <Button onClick={() => navigate('/inventario')}>Inventario</Button>
+    <Button onClick={() => navigate('/login')}>Login</Button>
+    
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route
+          path="/inventario"
+          element={ <Inventario /> }
+        />
+      </Routes>
     </>
   )
 }
