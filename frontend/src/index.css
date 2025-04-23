@@ -34,6 +34,16 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+/* Eliminar margen/padding por defecto del body y html */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 
 button {
   border-radius: 8px;
