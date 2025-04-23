@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <Button onClick={() => alert('Hello World!')}>Hello world!</Button>
-      <TablaEjemplo />
     </>
   )
 }

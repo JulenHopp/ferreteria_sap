@@ -7,7 +7,7 @@ import {
   FlexBoxDirection
 } from "@ui5/webcomponents-react";
 
-const TablaEjemplo = () => {
+export default function Inventario() {
   const [filtro, setFiltro] = useState("");
 
   const columns = [
@@ -72,6 +72,4 @@ const TablaEjemplo = () => {
       />
     </FlexBox>
   );
-};
-
-export default TablaEjemplo;
+}
