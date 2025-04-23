@@ -1,13 +1,12 @@
 import './App.css'
-import { Button } from '@ui5/webcomponents-react';
 import TablaEjemplo from "./pages/inventario"
+import LoginPage from "./pages/login"
 
 function App() {
 
   return (
     <>
-      <Button onClick={() => alert('Hello World!')}>Hello world!</Button>
-      <TablaEjemplo />
+      <LoginPage />
     </>
   )
 }
