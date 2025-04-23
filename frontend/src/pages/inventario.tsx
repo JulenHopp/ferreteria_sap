@@ -7,7 +7,7 @@ import {
   FlexBoxDirection
 } from "@ui5/webcomponents-react";
 
-const TablaEjemplo = () => {
+export default function Inventario() {
   const [filtro, setFiltro] = useState("");
 
   const columns = [
@@ -36,7 +36,7 @@ const TablaEjemplo = () => {
   ];
 
   const dataFiltrada = data.filter((item) =>
-    item.nombre?.toLowerCase().includes(filtro.toLowerCase())
+    item.nombre.toLowerCase().includes(filtro.toLowerCase())
   );
 
   return (
@@ -52,32 +52,24 @@ const TablaEjemplo = () => {
       <Input
         placeholder="Escribe un nombre..."
         value={filtro}
-        onInput={(e: CustomEvent & { detail: { value: string } }) =>
-          setFiltro(e.detail.value)
-        }
+        onInput={(e) => setFiltro((e.target as HTMLInputElement).value)}
         style={{ marginBottom: "1rem", width: "300px" }}
       />
 
-      {dataFiltrada.length > 0 ? (
-        <AnalyticalTable
-          columns={columns}
-          data={dataFiltrada}
-          visibleRows={5}
-          groupBy={[]}
-          scaleWidthMode="Grow"
-          style={{
-            width: "80vw",
-            maxWidth: "1200px",
-            minWidth: "800px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-            borderRadius: "8px"
-          }}
-        />
-      ) : (
-        <p style={{ marginTop: "1rem", fontStyle: "italic" }}>No hay resultados.</p>
-      )}
+      <AnalyticalTable
+        columns={columns}
+        data={dataFiltrada}
+        visibleRows={5}
+        groupBy={[]}
+        scaleWidthMode="Grow"
+        style={{
+          width: "80vw",
+          maxWidth: "1200px",
+          minWidth: "800px",
+          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+          borderRadius: "8px"
+        }}
+      />
     </FlexBox>
   );
-};
-
-export default TablaEjemplo;
+}
