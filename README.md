@@ -6,9 +6,9 @@ Este proyecto es parte del curso **Planeación de Sistemas de Software**. El obj
 
 ## 📦 Tecnologías utilizadas
 
-- **Frontend**: React + Vite + Material UI (MUI)
+- **Frontend**: React + Vite + SAP UI5
 - **Backend**: Node.js + Express
-- **Base de datos**: SQLite (para pruebas locales)
+- **Base de datos**: SAP HANA
 - **Control de versiones**: Git
 - **Otros**: SAP BTP (integración planificada), Figma (mockups)
 
