@@ -1,22 +1,19 @@
 const hana = require('@sap/hana-client');
-require('dotenv').config();
 
 const conn = hana.createConnection();
 
-function connectToHana() {
-  return new Promise((resolve, reject) => {
-    conn.connect({
-      serverNode: process.env.HANA_HOST,
-      uid: process.env.HANA_USER,
-      pwd: process.env.HANA_PASSWORD,
-    }, (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(conn);
-      }
-    });
-  });
-}
+conn.connect({
+  serverNode: process.env.HANA_HOST,
+  uid: process.env.HANA_USER,
+  pwd: process.env.HANA_PASSWORD,
+  sslValidateCertificate: 'false'
+}, (err) => {
+  if (err) {
+    console.error('Error conectando a SAP HANA:', err);
+    process.exit(1);
+  } else {
+    console.log('Conexión a SAP HANA exitosa');
+  }
+});
 
-module.exports = connectToHana;
+module.exports = conn;
