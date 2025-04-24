@@ -13,8 +13,8 @@ const UsuarioController = {
 
   createUsuario: async (req, res) => {
     try {
-      const { nombre, correo, contraseña, rol_id } = req.body;
-      await UsuarioModel.create({ nombre, correo, contraseña, rol_id });
+      const { nombre, correo, contrasena, rol_id } = req.body;
+      await UsuarioModel.create({ nombre, correo, contrasena, rol_id });
       res.status(201).json({ message: "Usuario creado correctamente" });
     } catch (err) {
       res.status(500).json({ error: err.message });

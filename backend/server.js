@@ -9,6 +9,7 @@ const productosRoutes = require("./src/routes/productosRoutes");
 const ordenesSugeridadIaRoutes = require("./src/routes/ordenesSugeridasIaRoutes");
 const inventarioRoutes = require("./src/routes/inventarioRoutes");
 const ventasRoutes = require("./src/routes/ventasRoutes");
+const authRoutes = require("./src/routes/authRoutes");
 
 app.use(express.json());
 
@@ -19,6 +20,7 @@ app.use("/api/productos", productosRoutes);
 app.use("/api/ordenes-sugeridad-ia", ordenesSugeridadIaRoutes);
 app.use("/api/inventario", inventarioRoutes);
 app.use("/api/ventas", ventasRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
