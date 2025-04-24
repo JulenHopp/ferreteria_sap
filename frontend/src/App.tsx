@@ -2,7 +2,8 @@ import './App.css'
 import { useNavigate, Routes, Route } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage';
-import Inventario from './pages/Inventario';
+import Inventario from './pages/inventario';
+import Pedidos from './pages/Pedidos';
 
 import { Button } from '@ui5/webcomponents-react';
 
@@ -12,6 +13,7 @@ function App() {
     <>
     <Button onClick={() => navigate('/inventario')}>Inventario</Button>
     <Button onClick={() => navigate('/login')}>Login</Button>
+    <Button onClick={() => navigate('/pedidos')}>Pedidos</Button>
     
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -19,6 +21,10 @@ function App() {
         <Route
           path="/inventario"
           element={ <Inventario /> }
+        />
+        <Route
+          path="/pedidos"
+          element={ <Pedidos/>}
         />
       </Routes>
     </>

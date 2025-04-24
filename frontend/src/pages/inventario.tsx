@@ -101,7 +101,7 @@ export default function Login() {
         <Input
           placeholder="Escribe nombre"
           value={filtro}
-          onInput={(e) => setFiltro((e.target as HTMLInputElement).value)}
+          onInput={(e) => setFiltro(((e.target as unknown) as HTMLInputElement).value)}
           style={{ width: "250px" }}
         />
         <Select
