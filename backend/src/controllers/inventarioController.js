@@ -10,6 +10,15 @@ const inventarioController = {
     }
   },
 
+  getAllInventarioWithDetails: async (req, res) => {
+    try {
+      const inventario = await inventarioModel.getAllWithDetails();
+      res.status(200).json(inventario)
+    } catch (err) {
+      res.status(500).json({error: err.message});
+    }
+  },
+
   createInventario: async (req, res) => {
     try {
       const { producto_id, cantidad, ubicacion } = req.body;
@@ -21,6 +30,22 @@ const inventarioController = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  updateCantidad: async (req, res) => {
+    try {
+      const { inventario_id, cantidad } = req.body;
+      
+      if (!inventario_id || !cantidad || cantidad < 0) 
+        res.status(400).json({ error: "Datos ingresados no validos"} );
+      
+      await inventarioModel.updateCantidad({ inventario_id, cantidad })
+      res
+        .status(201)
+        .json({ message: "Registro de inventario actualizado exitosamente" });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
 };
 
 module.exports = inventarioController;
