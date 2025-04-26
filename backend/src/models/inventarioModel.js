@@ -10,6 +10,15 @@ const inventarioModel = {
     });
   },
 
+  getAllWithDetails: async () => {
+    return new Promise((resolve, reject) => {
+    db.exec("SELECT * FROM Inventario_with_details", (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    })
+    })
+  },
+
   create: async ({ producto_id, cantidad, ubicacion }) => {
     return new Promise((resolve, reject) => {
       const query = `
@@ -25,6 +34,19 @@ const inventarioModel = {
       });
     });
   },
+
+  updateCantidad: async ({ inventario_id, cantidad }) => {
+    return new Promise((resolve, reject) => {
+      db.exec(
+        "CALL modificar_cantidad(?, ?)", 
+        [inventario_id, cantidad], // aquí pasamos las variables
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
+  }
 };
 
 module.exports = inventarioModel;

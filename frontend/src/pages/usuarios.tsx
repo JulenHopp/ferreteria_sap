@@ -1,33 +1,42 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import Logo from "../img/logo-ferreteriaJulen.png"
 import {
   AnalyticalTable,
   Input,
+  Label,
+  Title,
+  FlexBox,
+  FlexBoxDirection,
   Button,
   Select,
   Option
 } from "@ui5/webcomponents-react";
 
-export default function Inventario() {
+export default function Usuarios() {
   const [filtro, setFiltro] = useState("");
   const [categoria, setCategoria] = useState("");
 
   const columns = [
     {
-      Header: "Nombre del producto",
-      accessor: "nombre"
+      Header: "ID",
+      accessor: "id"
     },
     {
-      Header: "Categoría",
-      accessor: "categoria"
+      Header: "Nombre",
+      accessor: "Nombre"
     },
     {
-      Header: "Cantidad de producto",
-      accessor: "cantidad"
+      Header: "Correo",
+      accessor: "correo"
     },
     {
-      Header: "Número de serie",
-      accessor: "serie"
-    }
+      Header: "Rol",
+      accessor: "rol"
+    },
+    {
+        Header: "Editar",
+        accessor: "editar"
+    },
   ];
 
   const data = [
@@ -64,7 +73,30 @@ export default function Inventario() {
   );
 
   return (
-    <div style={{ width: "100%"}}>
+    <div style={{ width: "100%", minHeight: "100vh", paddingInline: "4rem", paddingTop: "2rem" }}>
+      {/* Header */}
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "2rem"
+      }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={Logo}
+            alt="logo"
+            style={{ width: "150px", height: "100px", borderRadius: "50%", marginRight: "1rem" }}
+          />
+          <Title level="H1" style={{ fontSize: "2.5rem", margin: 0 }}>Administrador</Title>
+        </div>
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <Button>Inventario</Button>
+          <Button>Pedidos</Button>
+          <Button>Usuarios</Button>
+          <Button icon="employee">Rodrigo K.</Button>
+        </div>
+      </div>
+
       {/* Filtros */}
       <div style={{
         display: "flex",
@@ -95,7 +127,8 @@ export default function Inventario() {
         columns={columns}
         data={dataFiltrada}
         visibleRows={12}
-        scaleWidthMode="Smart"
+        groupBy={[]}
+        scaleWidthMode="Grow"
         style={{
           width: "100%",
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",

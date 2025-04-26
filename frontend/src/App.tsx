@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import Inventario from './components/tables/InventoryTable';
 import Pedidos from './components/tables/OrdersTable';
+import Usuarios from './pages/usuarios';
+
 import TemporalNav from './__TemporalNav';
 
 function App() {
@@ -20,6 +22,10 @@ function App() {
         <Route
           path="/pedidos"
           element={ <Pedidos/>}
+        />
+        <Route
+          path="/usuarios"
+          element={ <Usuarios/>}
         />
       </Routes>
     </>
