@@ -1,21 +1,16 @@
 import './App.css'
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage';
-import Inventario from './pages/inventario';
-import Pedidos from './pages/Pedidos';
-
-import { Button } from '@ui5/webcomponents-react';
+import Inventario from './components/tables/InventoryTable';
+import Pedidos from './components/tables/OrdersTable';
+import TemporalNav from './__TemporalNav';
 
 function App() {
-  const navigate = useNavigate();
   return (
     <>
-    <Button onClick={() => navigate('/inventario')}>Inventario</Button>
-    <Button onClick={() => navigate('/login')}>Login</Button>
-    <Button onClick={() => navigate('/pedidos')}>Pedidos</Button>
-    
       <Routes>
+        <Route path="/" element={<TemporalNav />} />
         <Route path="/login" element={<LoginPage />} />
 
         <Route

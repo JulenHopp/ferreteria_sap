@@ -1,12 +1,7 @@
-import React, { useState } from "react";
-import Logo from "../img/logo-ferreteriaJulen.png"
+import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
-  Label,
-  Title,
-  FlexBox,
-  FlexBoxDirection,
   Button,
   Select,
   Option
@@ -69,28 +64,7 @@ export default function Login() {
   );
 
   return (
-    <div style={{ width: "100%", minHeight: "100vh", paddingInline: "4rem", paddingTop: "2rem" }}>
-      {/* Header */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "2rem"
-      }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={Logo}
-            alt="logo"
-            style={{ width: "150px", height: "100px", borderRadius: "50%", marginRight: "1rem" }}
-          />
-          <Title level="H1" style={{ fontSize: "2.5rem", margin: 0 }}>Almacenador</Title>
-        </div>
-        <div style={{ display: "flex", gap: "1rem" }}>
-          <Button>Inventario</Button>
-          <Button icon="employee">Rodrigo K.</Button>
-        </div>
-      </div>
-
+    <div style={{ width: "100%"}}>
       {/* Filtros */}
       <div style={{
         display: "flex",
@@ -122,8 +96,7 @@ export default function Login() {
         columns={columns}
         data={dataFiltrada}
         visibleRows={12}
-        groupBy={[]}
-        scaleWidthMode="Grow"
+        scaleWidthMode="Smart"
         style={{
           width: "100%",
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FlexBox,
   FlexBoxAlignItems,
@@ -16,13 +15,12 @@ export default function Login() {
   return (
     <FlexBox
       style={{
-        height: "100vh",
-        width: "100vw",
+        height: "100%",
+        width: "100%",
         overflow: "hidden",
         margin: "0",
         padding: "0",
         boxSizing: "border-box",
-        transform: "scale(1.08) translateX(-3%)",
       }}
     >
       {/* Panel izquierdo negro */}

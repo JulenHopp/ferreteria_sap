@@ -1,21 +1,15 @@
 // frontend/src/pages/Pedidos.jsx
-import React, { useState } from "react";
-import Logo from "../img/logo-ferreteriaJulen.png";
+import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
-  Title,
-  FlexBox,
-  Button,
   Select,
   Option,
 } from "@ui5/webcomponents-react";
-import { useNavigate } from "react-router-dom";
 
 export default function Pedidos() {
   const [filtro, setFiltro] = useState("");
   const [estatus, setEstatus] = useState("");
-  const navigate = useNavigate();
 
   interface Pedido {
     numero: number;
@@ -81,28 +75,6 @@ export default function Pedidos() {
 
   return (
     <div style={{ width: "100%", minHeight: "100vh", paddingInline: "4rem", paddingTop: "2rem" }}>
-      {/* Header */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "2rem"
-      }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={Logo}
-            alt="logo"
-            style={{ width: "150px", height: "100px", borderRadius: "50%", marginRight: "1rem" }}
-          />
-          <Title level="H1" style={{ fontSize: "2.5rem", margin: 0 }}>Comprador</Title>
-        </div>
-        <div style={{ display: "flex", gap: "1rem" }}>
-          <Button>Inventario</Button>
-          <Button>AI Assistance</Button>
-          <Button onClick={() => navigate("/pedidos")}>Pedidos</Button>
-          <Button icon="employee">Rodrigo K.</Button>
-        </div>
-      </div>
 
       {/* Filtros */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>
@@ -127,7 +99,11 @@ export default function Pedidos() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
+        filterable={true}
         visibleRows={10}
+        loading={false}
+        loadingDelay={20}
+        noDataText="No hay datos disponibles"
         scaleWidthMode="Grow"
         style={{
           width: "100%",
