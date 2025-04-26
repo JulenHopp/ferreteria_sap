@@ -11,28 +11,35 @@ import {
   Select,
   Option
 } from "@ui5/webcomponents-react";
+import { useNavigate } from "react-router-dom";
 
-export default function Inventario() {
+
+export default function Usuarios() {
   const [filtro, setFiltro] = useState("");
   const [categoria, setCategoria] = useState("");
+  const navigate = useNavigate();
 
   const columns = [
     {
-      Header: "Nombre del producto",
-      accessor: "nombre"
+      Header: "ID",
+      accessor: "id"
     },
     {
-      Header: "Categoría",
-      accessor: "categoria"
+      Header: "Nombre",
+      accessor: "Nombre"
     },
     {
-      Header: "Cantidad de producto",
-      accessor: "cantidad"
+      Header: "Correo",
+      accessor: "correo"
     },
     {
-      Header: "Número de serie",
-      accessor: "serie"
-    }
+      Header: "Rol",
+      accessor: "rol"
+    },
+    {
+        Header: "Editar",
+        accessor: "editar"
+    },
   ];
 
   const data = [
@@ -83,10 +90,12 @@ export default function Inventario() {
             alt="logo"
             style={{ width: "150px", height: "100px", borderRadius: "50%", marginRight: "1rem" }}
           />
-          <Title level="H1" style={{ fontSize: "2.5rem", margin: 0 }}>Almacenador</Title>
+          <Title level="H1" style={{ fontSize: "2.5rem", margin: 0 }}>Administrador</Title>
         </div>
         <div style={{ display: "flex", gap: "1rem" }}>
           <Button>Inventario</Button>
+          <Button>Pedidos</Button>
+          <Button>Usuarios</Button>
           <Button icon="employee">Rodrigo K.</Button>
         </div>
       </div>
