@@ -30,6 +30,10 @@ function App() {
           path="/pedidos"
           element={ <Pedidos/>}
         />
+        <Route
+          path="/usuarios"
+          element={ <Usuarios/>}
+        />
       </Routes>
     </>
   )

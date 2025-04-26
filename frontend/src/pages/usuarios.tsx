@@ -11,13 +11,10 @@ import {
   Select,
   Option
 } from "@ui5/webcomponents-react";
-import { useNavigate } from "react-router-dom";
-
 
 export default function Usuarios() {
   const [filtro, setFiltro] = useState("");
   const [categoria, setCategoria] = useState("");
-  const navigate = useNavigate();
 
   const columns = [
     {
