@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import Logo from "../img/logo-ferreteriaJulen.png";
 import { useState } from "react";
 import {
   AnalyticalTable,
@@ -8,16 +10,15 @@ import {
 
 export default function Usuarios() {
   const [filtro, setFiltro] = useState("");
-  const [categoria, setCategoria] = useState("");
 
   const columns = [
     {
-      Header: "ID",
+      Header: "Número de pedido",
       accessor: "id"
     },
     {
-      Header: "Nombre",
-      accessor: "Nombre"
+      Header: "Nombre usuario",
+      accessor: "nombre"
     },
     {
       Header: "Correo",
@@ -28,42 +29,33 @@ export default function Usuarios() {
       accessor: "rol"
     },
     {
-        Header: "Editar",
-        accessor: "editar"
-    },
+      Header: "Editar",
+      accessor: "editar",
+      Cell: () => <Button>Editar</Button>  // <- botón en cada fila
+    }
   ];
 
   const data = [
-    { nombre: "Martillo", categoria: "Herramienta manual", cantidad: 25, serie: "001" },
-    { nombre: "Clavos", categoria: "Materiales de sujeción", cantidad: 100, serie: "002" },
-    { nombre: "Llave inglesa", categoria: "Herramienta manual", cantidad: 20, serie: "003" },
-    { nombre: "Destornillador", categoria: "Herramienta manual", cantidad: 32, serie: "004" },
-    { nombre: "Sierra manual", categoria: "Herramienta manual", cantidad: 40, serie: "005" },
-    { nombre: "Taladro electrico", categoria: "Herramientas eléctricas", cantidad: 15, serie: "006" },
-    { nombre: "Cinta metrica", categoria: "Medición e iluminación", cantidad: 200, serie: "007" },
-    { nombre: "Tenazas", categoria: "Herramienta manual", cantidad: 20, serie: "008" },
-    { nombre: "Linterna", categoria: "Medición e iluminación", cantidad: 5, serie: "009" },
-    { nombre: "Cinta metrica", categoria: "Medición e iluminación", cantidad: 200, serie: "007" },
-    { nombre: "Tenazas", categoria: "Herramienta manual", cantidad: 20, serie: "008" },
-    { nombre: "Martillo", categoria: "Herramienta manual", cantidad: 25, serie: "001" },
-    { nombre: "Clavos", categoria: "Materiales de sujeción", cantidad: 100, serie: "002" },
-    { nombre: "Llave inglesa", categoria: "Herramienta manual", cantidad: 20, serie: "003" },
-    { nombre: "Destornillador", categoria: "Herramienta manual", cantidad: 32, serie: "004" },
-    { nombre: "Sierra manual", categoria: "Herramienta manual", cantidad: 40, serie: "005" },
-    { nombre: "Taladro electrico", categoria: "Herramientas eléctricas", cantidad: 15, serie: "006" },
-    { nombre: "Martillo", categoria: "Herramienta manual", cantidad: 25, serie: "001" },
-    { nombre: "Clavos", categoria: "Materiales de sujeción", cantidad: 100, serie: "002" },
-    { nombre: "Llave inglesa", categoria: "Herramienta manual", cantidad: 20, serie: "003" },
-    { nombre: "Destornillador", categoria: "Herramienta manual", cantidad: 32, serie: "004" },
-    { nombre: "Sierra manual", categoria: "Herramienta manual", cantidad: 40, serie: "005" },
-    { nombre: "Taladro electrico", categoria: "Herramientas eléctricas", cantidad: 15, serie: "006" },
-    { nombre: "Linterna", categoria: "Medición e iluminación", cantidad: 5, serie: "009" }
+    { id: "001", nombre: "Rodrigo Kalionchiz", correo: "rodrigok@fjulen.com.mx", rol: "Dueño" },
+    { id: "002", nombre: "Eugenio Garza", correo: "eugeniog@fjulen.com.mx", rol: "Almacenador" },
+    { id: "003", nombre: "Julen Hernandez", correo: "julenh@fjulen.com.mx", rol: "Almacenador" },
+    { id: "004", nombre: "Adolfo Gonzalez", correo: "adolfofg@fjulen.com.mx", rol: "Almacenador" },
+    { id: "005", nombre: "Marcelo Cardenas", correo: "marceloc@fjulen.com.mx", rol: "Comprador" },
+    { id: "006", nombre: "Danny Wu", correo: "dannyw@fjulen.com.mx", rol: "Comprador" },
+    { id: "007", nombre: "Ricardo Chapa", correo: "ricardoc@fjulen.com.mx", rol: "Almacenador" },
+    { id: "008", nombre: "Guillermo Montemayor", correo: "guillermom@fjulen.com.mx", rol: "Comprador" },
+    { id: "009", nombre: "Adrian Guereque", correo: "adriang@fjulen.com.mx", rol: "Comprador" },
+    { id: "010", nombre: "David Mireles", correo: "davidm@fjulen.com.mx", rol: "Comprador" },
+    { id: "011", nombre: "Emilio Vidal", correo: "emiliov@fjulen.com.mx", rol: "Comprador" },
+    { id: "012", nombre: "Alejandro Charles", correo: "alejandrodc@fjulen.com.mx", rol: "Comprador" },
+    { id: "013", nombre: "Mauricio Noriega", correo: "mauricion@fjulen.com.mx", rol: "Comprador" },
+    { id: "014", nombre: "Hugo Lozano", correo: "hugol@fjulen.com.mx", rol: "Comprador" },
+    { id: "015", nombre: "Alejandro Perea", correo: "alejandrop@fjulen.com.mx", rol: "Comprador" }
   ];
 
   const dataFiltrada = data.filter(
     (item) =>
-      item.nombre.toLowerCase().includes(filtro.trim().toLowerCase()) &&
-      (categoria ? item.categoria === categoria : true)
+      item.nombre.toLowerCase().includes(filtro.trim().toLowerCase())
   );
 
   return (
@@ -71,9 +63,9 @@ export default function Usuarios() {
       {/* Filtros */}
       <div style={{
         display: "flex",
-        gap: "1rem",
         alignItems: "center",
-        marginBottom: "1.5rem"
+        marginBottom: "1rem",
+        gap: "1rem"
       }}>
         <Input
           placeholder="Escribe nombre"
@@ -81,16 +73,7 @@ export default function Usuarios() {
           onInput={(e) => setFiltro(((e.target as unknown) as HTMLInputElement).value)}
           style={{ width: "250px" }}
         />
-        <Select
-          onChange={(e: any) => setCategoria(e.detail.selectedOption.value)}
-          style={{ width: "200px" }}
-        >
-          <Option value="">Seleccionar Categoría</Option>
-          <Option value="Herramienta manual">Herramienta manual</Option>
-          <Option value="Materiales de sujeción">Materiales de sujeción</Option>
-          <Option value="Herramientas eléctricas">Herramientas eléctricas</Option>
-          <Option value="Medición e iluminación">Medición e iluminación</Option>
-        </Select>
+        <Button>Agregar usuario</Button>
       </div>
 
       {/* Tabla */}
@@ -102,6 +85,7 @@ export default function Usuarios() {
         noDataText="No hay datos disponibles"
         style={{
           width: "100%",
+          backgroundColor: "white",
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",
           borderRadius: "8px"
         }}
