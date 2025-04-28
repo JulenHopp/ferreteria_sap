@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import Logo from "../img/logo-ferreteriaJulen.png";
 import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
-  Select,
-  Option
+  Button
 } from "@ui5/webcomponents-react";
 
 export default function Usuarios() {
