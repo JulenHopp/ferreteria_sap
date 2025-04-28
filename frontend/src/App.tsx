@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import Inventario from './components/tables/InventoryTable';
 import Pedidos from './components/tables/OrdersTable';
-import Usuarios from './pages/usuarios';
+import Usuarios from './components/tables/UsersTable';
 
 import TemporalNav from './__TemporalNav';
 

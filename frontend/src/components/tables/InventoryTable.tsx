@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
-  Button,
   Select,
   Option
 } from "@ui5/webcomponents-react";
@@ -96,6 +95,7 @@ export default function Inventario() {
         data={dataFiltrada}
         visibleRows={12}
         scaleWidthMode="Smart"
+        noDataText="No hay datos disponibles"
         style={{
           width: "100%",
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",
