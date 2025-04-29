@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import Inventario from './components/tables/InventoryTable';
 import Pedidos from './components/tables/OrdersTable';
 import Usuarios from './components/tables/UsersTable';
+import NavLayout from './components/nav/NavLayout';
 
 import TemporalNav from './__TemporalNav';
 
@@ -26,6 +27,11 @@ function App() {
         <Route
           path="/usuarios"
           element={ <Usuarios/>}
+        />
+
+        <Route
+          path="/nav"
+          element={ <NavLayout/> }
         />
       </Routes>
     </>
