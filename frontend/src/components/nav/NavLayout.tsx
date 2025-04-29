@@ -1,76 +1,77 @@
 import {
-    Button,
+    Avatar,
+    FlexBox,
     NavigationLayout,
     ShellBar,
     SideNavigation,
-    SideNavigationGroup,
     SideNavigationItem,
-    SideNavigationSubItem,
-    Text,
-    Title
 } from '@ui5/webcomponents-react';
 
+import { useState, ReactNode } from 'react';
+
+import InventoryTable from '../tables/InventoryTable';
+import DashboardTable from '../tables/OrdersTable';
+import UsersTable from '../tables/UsersTable';
+import { navPermissions, NavItem } from "../../auth/navPermissions";
+
 export default function NavLayout() {
+    const [selectedKey, setSelectedKey] = useState("inventory");
+    const menuItems: NavItem[] = navPermissions["admin"] || []; // hardcoded admin for now
+
+    const contentMap: Record<string, ReactNode> = {
+        inventory: <InventoryTable />,
+        orders: <DashboardTable />,
+        users: <UsersTable />,
+    };
+
     return (
-        <div
-        style={{
-            height: '800px',
-            position: 'relative'
-        }}
-        >
         <NavigationLayout
             mode="Collapsed"
             header={
                 <ShellBar
-                    logo={<img src="img/icon-dark.png" />}
+                    logo={<img alt="FJ Logo" src="./img/icon-dark.png" style={{paddingRight: "1rem"}}/>}
                     primaryTitle="Ferreteria Julen"
+                    profile={<Avatar icon={"customer"} size='M'/>}
                     secondaryTitle="Gestión de Inventario"
+                    onProfileClick={function Xs(){}} // TODO: Implement profile click handler logout
                 />
             }
             sideContent={
                 <SideNavigation
-                    onSelectionChange={function Xs(){}} slot="sideContent">
-                    <SideNavigationItem icon="home" text="Home"/>
-                    <SideNavigationGroup expanded text="Group 1">
-                        <SideNavigationItem expanded icon="locate-me" text="Item 1">
-                            <SideNavigationSubItem text="Sub Item 1" />
-                            <SideNavigationSubItem text="Sub Item 2" />
-                        </SideNavigationItem>
-                        <SideNavigationItem expanded icon="calendar" text="Item 2">
-                            <SideNavigationSubItem text="Sub Item 3" />
-                            <SideNavigationSubItem text="Sub Item 4" />
-                        </SideNavigationItem>
-                        <SideNavigationItem expanded icon="activity-assigned-to-goal" text="Item 3">
-                            <SideNavigationSubItem text="Sub Item 5" />
-                            <SideNavigationSubItem text="Sub Item 6" />
-                        </SideNavigationItem>
-                    </SideNavigationGroup>
-                    <SideNavigationGroup expanded text="Group 2">
-                        <SideNavigationItem icon="history" text="Item 4"/>
-                        <SideNavigationItem icon="source-code" text="Item 5"/>
-                        <SideNavigationItem icon="background" text="Item 6"/>
-                    </SideNavigationGroup>
-                    <SideNavigationItem href="https://www.sap.com/about/legal/impressum.html" icon="compare" slot="fixedItems" target="_blank" text="Legal"/>
-                    <SideNavigationItem href="https://www.sap.com/about/legal/privacy.html" icon="locked" slot="fixedItems" target="_blank" text="Privacy"/>
-                    <SideNavigationItem href="https://www.sap.com/terms-of-use" icon="document-text" slot="fixedItems" target="_blank" text="Terms of Use"/>
-                </SideNavigation>}>
-            <div
+                    onSelectionChange={(e) =>
+                        setSelectedKey(e.detail.item.dataset.key || menuItems[0]?.key || "inventory")
+                    }
+                >
+                    {menuItems.map((item: NavItem) => (
+                        <SideNavigationItem
+                            key={item.key}
+                            text={item.text}
+                            icon={item.icon}
+                            selected={selectedKey === item.key}
+                            data-key={item.key}
+                        />
+                    ))}
+                </SideNavigation>
+            }
             style={{
-                padding: '1rem'
+                minWidth: '600px',
+                height: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
             }}
+        >
+            <FlexBox
+                alignItems='Center'
+                justifyContent='Center'
+                style={{
+                    flex: 1,
+                    padding: '2rem',
+                    boxSizing: 'border-box',
+                    overflow: 'auto',
+                }}
             >
-            <div>
-                <Title>
-                Home
-                </Title>
-                <br />
-                <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </Text>
-            </div>
-            </div>
+                {contentMap[selectedKey] || <div>Selecciona una opción del menú</div>}
+            </FlexBox>
         </NavigationLayout>
-        
-        </div>
     );
 }
