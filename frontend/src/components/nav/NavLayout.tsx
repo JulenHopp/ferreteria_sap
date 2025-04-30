@@ -1,27 +1,26 @@
+import { ReactNode, useState } from 'react';
 import {
     Avatar,
     FlexBox,
     NavigationLayout,
     ShellBar,
-    SideNavigation,
-    SideNavigationItem,
+    type UI5WCSlotsNode,
+    Popover,
+    Button
 } from '@ui5/webcomponents-react';
 
-import { useState, ReactNode } from 'react';
+interface NavLayoutProps {
+    children: ReactNode;
+    sideContent: UI5WCSlotsNode;
+}
 
-import InventoryTable from '../tables/InventoryTable';
-import DashboardTable from '../tables/OrdersTable';
-import UsersTable from '../tables/UsersTable';
-import { navPermissions, NavItem } from "../../auth/navPermissions";
+export default function NavLayout({ children, sideContent }: NavLayoutProps) {
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const [popoverOpener, setPopoverOpener] = useState<HTMLElement | undefined>(undefined);
 
-export default function NavLayout() {
-    const [selectedKey, setSelectedKey] = useState("inventory");
-    const menuItems: NavItem[] = navPermissions["admin"] || []; // hardcoded admin for now
-
-    const contentMap: Record<string, ReactNode> = {
-        inventory: <InventoryTable />,
-        orders: <DashboardTable />,
-        users: <UsersTable />,
+    const handleProfileClick = (e: any) => {
+        setIsPopoverOpen(true);
+        setPopoverOpener(e.detail.targetRef);
     };
 
     return (
@@ -33,26 +32,10 @@ export default function NavLayout() {
                     primaryTitle="Ferreteria Julen"
                     profile={<Avatar icon={"customer"} size='M'/>}
                     secondaryTitle="Gestión de Inventario"
-                    onProfileClick={function Xs(){}} // TODO: Implement profile click handler logout
+                    onProfileClick={handleProfileClick}
                 />
             }
-            sideContent={
-                <SideNavigation
-                    onSelectionChange={(e) =>
-                        setSelectedKey(e.detail.item.dataset.key || menuItems[0]?.key || "inventory")
-                    }
-                >
-                    {menuItems.map((item: NavItem) => (
-                        <SideNavigationItem
-                            key={item.key}
-                            text={item.text}
-                            icon={item.icon}
-                            selected={selectedKey === item.key}
-                            data-key={item.key}
-                        />
-                    ))}
-                </SideNavigation>
-            }
+            sideContent={sideContent}
             style={{
                 minWidth: '600px',
                 height: '100vh',
@@ -70,8 +53,24 @@ export default function NavLayout() {
                     overflow: 'auto',
                 }}
             >
-                {contentMap[selectedKey] || <div>Selecciona una opción del menú</div>}
+                {children}
             </FlexBox>
+            <Popover
+                open={isPopoverOpen}
+                opener={popoverOpener}
+                onClose={() => setIsPopoverOpen(false)}
+            >
+                <div style={{ padding: '1rem' }}>
+                    <Button 
+                        onClick={() => {
+                            // Add logout logic here
+                            setIsPopoverOpen(false);
+                        }}
+                    >
+                        Cerrar Sesión
+                    </Button>
+                </div>
+            </Popover>
         </NavigationLayout>
     );
 }

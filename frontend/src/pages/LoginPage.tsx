@@ -33,7 +33,7 @@ export default function Login() {
         justifyContent={"Center"}
         className="hide-on-small"
       >
-        <img src="img/logo-white.png" width={300}/>
+        <img src="img/logo-white.png" alt="Logo" width={300}/>
       </FlexBox>
 
       {/* Panel derecho centrado */}
