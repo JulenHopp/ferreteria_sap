@@ -5,6 +5,8 @@ import {
   Select,
   Option
 } from "@ui5/webcomponents-react";
+import type { Ui5CustomEvent } from "@ui5/webcomponents-react";
+import type { SelectDomRef, SelectChangeEventDetail } from "@ui5/webcomponents-react/dist/Select";
 
 export default function Inventario() {
   const [filtro, setFiltro] = useState("");
@@ -78,7 +80,9 @@ export default function Inventario() {
           style={{ width: "250px" }}
         />
         <Select
-          onChange={(e: any) => setCategoria(e.detail.selectedOption.value)}
+          onChange={(e: Ui5CustomEvent<SelectDomRef, SelectChangeEventDetail>) => {
+            setCategoria(e.detail.selectedOption.value);
+          }}
           style={{ width: "200px" }}
         >
           <Option value="">Seleccionar Categoría</Option>
