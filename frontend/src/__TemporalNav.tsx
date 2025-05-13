@@ -6,10 +6,8 @@ function TemporalNav() {
     
     return (
     <>
-        <Button onClick={() => navigate('/inventario')}>Inventario</Button>
         <Button onClick={() => navigate('/login')}>Login</Button>
-        <Button onClick={() => navigate('/pedidos')}>Pedidos</Button>
-        <Button onClick={() => navigate('/usuarios')}>Usuarios</Button>
+        <Button onClick={() => navigate('/dashboard')}>Nav</Button>
     </>
   );
 }
