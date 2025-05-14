@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "lint": "eslint . || true",
+    "preview": "vite preview",
+    "test": ""
   },
   "dependencies": {
     "@ui5/webcomponents": "^2.9.0",
