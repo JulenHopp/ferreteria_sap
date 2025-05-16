@@ -10,8 +10,6 @@ import {
   ComboBox,
   ComboBoxItem
 } from "@ui5/webcomponents-react";
-import type { Ui5CustomEvent } from "@ui5/webcomponents-react";
-import type { SelectDomRef, SelectChangeEventDetail } from "@ui5/webcomponents-react/dist/Select";
 
 export default function Inventario() {
   const [filtro, setFiltro] = useState("");
