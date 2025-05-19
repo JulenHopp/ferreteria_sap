@@ -99,7 +99,7 @@ export default function Pedidos() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
-        visibleRows={12}
+        visibleRows={16}
         scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{

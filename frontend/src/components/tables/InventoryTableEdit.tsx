@@ -3,10 +3,11 @@ import {
   AnalyticalTable,
   Input,
   Select,
-  Option
+  Option,
+  Button
 } from "@ui5/webcomponents-react";
 
-export default function Inventario() {
+export default function InventarioEdit() {
   const [filtro, setFiltro] = useState("");
   const [categoria, setCategoria] = useState("");
 
@@ -34,6 +35,11 @@ export default function Inventario() {
     {
       Header: "Precio",
       accessor: "PRECIO_UNITARIO"
+    },
+    {
+      Header: "Editar",
+      accessor: "editar",
+      Cell: () => <Button>Editar</Button>  // <- botón en cada fila
     }
   ];
 

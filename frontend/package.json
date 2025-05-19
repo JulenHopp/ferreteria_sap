@@ -15,6 +15,7 @@
     "@ui5/webcomponents-icons": "^2.9.0",
     "@ui5/webcomponents-react": "^2.9.2",
     "@ui5/webcomponents-theming": "^2.9.0",
+    "axios": "^1.9.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.30.0"

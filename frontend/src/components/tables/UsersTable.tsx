@@ -10,7 +10,7 @@ export default function Usuarios() {
 
   const columns = [
     {
-      Header: "Número de pedido",
+      Header: "Número de usuario",
       accessor: "id"
     },
     {
@@ -77,7 +77,7 @@ export default function Usuarios() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
-        visibleRows={12}
+        visibleRows={16}
         scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
