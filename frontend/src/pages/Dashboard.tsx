@@ -12,7 +12,7 @@ import { navPermissions, NavItem } from "../auth/navPermissions";
 
 export default function Dashboard() {
     const [selectedKey, setSelectedKey] = useState("inventory");
-    const menuItems: NavItem[] = navPermissions[3] || []; // hardcoded admin for now
+    const menuItems: NavItem[] = navPermissions[1] || []; // hardcoded admin for now
 
     const contentMap: Record<string, ReactNode> = {
         inventory: <InventoryTable />,

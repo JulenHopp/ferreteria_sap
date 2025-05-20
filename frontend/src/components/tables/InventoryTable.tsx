@@ -31,172 +31,34 @@ export default function Inventario() {
   const columns = [
     {
       Header: "Nombre del producto",
-      accessor: "NOMBRE"
+      accessor: "nombre"
     },
     {
       Header: "Categoría",
-      accessor: "CATEGORIA"
+      accessor: "categoria"
     },
     {
       Header: "Cantidad de producto",
-      accessor: "CANTIDAD"
+      accessor: "cantidad"
     },
     {
       Header: "Descripción",
-      accessor: "DESCRIPCION"
+      accessor: "descripcion"
     },
     {
       Header: "Ubicación",
-      accessor: "UBICACION"
+      accessor: "ubicacion"
     },
     {
       Header: "Precio",
-      accessor: "PRECIO_UNITARIO"
+      accessor: "precio_unitario"
     }
   ];
 
-  const data = [
-    {
-        "ID": 1,
-        "NOMBRE": "Taladro eléctrico",
-        "CATEGORIA": "Herramientas",
-        "CANTIDAD": 15,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega A - Estante 1",
-        "PRECIO_UNITARIO": "1200.00"
-    },
-    {
-        "ID": 2,
-        "NOMBRE": "Cemento gris 50kg",
-        "CATEGORIA": "Materiales de Construcción",
-        "CANTIDAD": 45,
-        "DESCRIPCION": "saco",
-        "UBICACION": "Bodega B - Estante 3",
-        "PRECIO_UNITARIO": "250.00"
-    },
-    {
-        "ID": 3,
-        "NOMBRE": "Casco de seguridad",
-        "CATEGORIA": "Equipo de Seguridad",
-        "CANTIDAD": 22,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega A - Estante 5",
-        "PRECIO_UNITARIO": "180.00"
-    },
-    {
-        "ID": 4,
-        "NOMBRE": "Cemento gris 50kg",
-        "CATEGORIA": "Materiales de Construcción",
-        "CANTIDAD": 2,
-        "DESCRIPCION": "saco",
-        "UBICACION": "Sala A",
-        "PRECIO_UNITARIO": "250.00"
-    },
-    {
-        "ID": 5,
-        "NOMBRE": "Pala para construcción",
-        "CATEGORIA": "Herramientas",
-        "CANTIDAD": 30,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega C - Estante 2",
-        "PRECIO_UNITARIO": "450.00"
-    },
-    {
-        "ID": 6,
-        "NOMBRE": "Guantes de seguridad",
-        "CATEGORIA": "Equipo de Seguridad",
-        "CANTIDAD": 60,
-        "DESCRIPCION": "par",
-        "UBICACION": "Bodega A - Estante 7",
-        "PRECIO_UNITARIO": "35.00"
-    },
-    {
-        "ID": 7,
-        "NOMBRE": "Martillo de acero",
-        "CATEGORIA": "Herramientas",
-        "CANTIDAD": 25,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega B - Estante 6",
-        "PRECIO_UNITARIO": "350.00"
-    },
-    {
-        "ID": 8,
-        "NOMBRE": "Saco de arena 25kg",
-        "CATEGORIA": "Materiales de Construcción",
-        "CANTIDAD": 80,
-        "DESCRIPCION": "saco",
-        "UBICACION": "Bodega A - Estante 8",
-        "PRECIO_UNITARIO": "100.00"
-    },
-    {
-        "ID": 9,
-        "NOMBRE": "Cinta métrica 5m",
-        "CATEGORIA": "Herramientas",
-        "CANTIDAD": 50,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega C - Estante 1",
-        "PRECIO_UNITARIO": "150.00"
-    },
-    {
-        "ID": 10,
-        "NOMBRE": "Botas de seguridad",
-        "CATEGORIA": "Equipo de Seguridad",
-        "CANTIDAD": 15,
-        "DESCRIPCION": "par",
-        "UBICACION": "Bodega A - Estante 2",
-        "PRECIO_UNITARIO": "300.00"
-    },
-    {
-        "ID": 11,
-        "NOMBRE": "Bloques de concreto",
-        "CATEGORIA": "Materiales de Construcción",
-        "CANTIDAD": 100,
-        "DESCRIPCION": "unidad",
-        "UBICACION": "Bodega B - Estante 4",
-        "PRECIO_UNITARIO": "50.00"
-    },
-    {
-        "ID": 12,
-        "NOMBRE": "Escalera de aluminio 3m",
-        "CATEGORIA": "Herramientas",
-        "CANTIDAD": 10,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega C - Estante 5",
-        "PRECIO_UNITARIO": "850.00"
-    },
-    {
-        "ID": 13,
-        "NOMBRE": "Pico para construcción",
-        "CATEGORIA": "Herramientas",
-        "CANTIDAD": 20,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega A - Estante 3",
-        "PRECIO_UNITARIO": "600.00"
-    },
-    {
-        "ID": 14,
-        "NOMBRE": "Saco de cal 25kg",
-        "CATEGORIA": "Materiales de Construcción",
-        "CANTIDAD": 40,
-        "DESCRIPCION": "saco",
-        "UBICACION": "Sala B",
-        "PRECIO_UNITARIO": "120.00"
-    },
-    {
-        "ID": 15,
-        "NOMBRE": "Lámpara de seguridad LED",
-        "CATEGORIA": "Equipo de Seguridad",
-        "CANTIDAD": 10,
-        "DESCRIPCION": "pieza",
-        "UBICACION": "Bodega B - Estante 2",
-        "PRECIO_UNITARIO": "200.00"
-    }
-];
-
   const dataFiltrada = data.filter(
     (item) =>
-      item.NOMBRE.toLowerCase().includes(filtro.trim().toLowerCase()) &&
-      (categoria ? item.CATEGORIA === categoria : true)
+      item.nombre.toLowerCase().includes(filtro.trim().toLowerCase()) &&
+      (categoria ? item.categoria === categoria : true)
   );
 
   const openDialog = () => {
