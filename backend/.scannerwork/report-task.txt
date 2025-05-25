@@ -2,5 +2,5 @@ projectKey=Ferreteria-Julen
 serverUrl=http://localhost:9000
 serverVersion=25.4.0.105899
 dashboardUrl=http://localhost:9000/dashboard?id=Ferreteria-Julen
-ceTaskId=2c2f3ced-5db2-45df-a7da-8d2304824a3f
-ceTaskUrl=http://localhost:9000/api/ce/task?id=2c2f3ced-5db2-45df-a7da-8d2304824a3f
+ceTaskId=088d6b72-b7c3-486e-94e2-4665e1684886
+ceTaskUrl=http://localhost:9000/api/ce/task?id=088d6b72-b7c3-486e-94e2-4665e1684886
