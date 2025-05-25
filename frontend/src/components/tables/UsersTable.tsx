@@ -52,6 +52,11 @@ export default function Usuarios() {
     setDialogEditarOpen(false);
   };
 
+  const eliminarUsuario = () => {
+    setData(prev => prev.filter(u => u.id !== usuarioEditando.id));
+    setDialogEditarOpen(false);
+  };
+
   const columns = [
     { Header: "Número de usuario", accessor: "id" },
     { Header: "Nombre usuario", accessor: "nombre" },
@@ -145,6 +150,7 @@ export default function Usuarios() {
           footer={
             <>
               <Button onClick={() => setDialogEditarOpen(false)}>Cancelar</Button>
+              <Button onClick={eliminarUsuario} design="Negative">Eliminar</Button>
               <Button onClick={guardarEdicion} design="Emphasized">Guardar</Button>
             </>
           }
