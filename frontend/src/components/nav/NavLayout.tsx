@@ -8,6 +8,8 @@ import {
     Popover,
     Button
 } from '@ui5/webcomponents-react';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface NavLayoutProps {
     children: ReactNode;
@@ -17,10 +19,18 @@ interface NavLayoutProps {
 export default function NavLayout({ children, sideContent }: NavLayoutProps) {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [popoverOpener, setPopoverOpener] = useState<HTMLElement | undefined>(undefined);
+    const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const handleProfileClick = (e: any) => {
         setIsPopoverOpen(true);
         setPopoverOpener(e.detail.targetRef);
+    };
+
+    const handleLogout = () => {
+        logout();
+        setIsPopoverOpen(false);
+        navigate('/login');
     };
 
     return (
@@ -62,10 +72,7 @@ export default function NavLayout({ children, sideContent }: NavLayoutProps) {
             >
                 <div style={{ padding: '1rem' }}>
                     <Button 
-                        onClick={() => {
-                            // Add logout logic here
-                            setIsPopoverOpen(false);
-                        }}
+                        onClick={handleLogout}
                     >
                         Cerrar Sesión
                     </Button>

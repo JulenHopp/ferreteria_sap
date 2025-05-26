@@ -1,21 +1,28 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
-
-import TemporalNav from './__TemporalNav';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<TemporalNav />} />
-        <Route path="/login" element={<LoginPage />} />
-
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/login" element={
+          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+        } />
         <Route
           path="/dashboard"
-          element={ <Dashboard/> }
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </>
