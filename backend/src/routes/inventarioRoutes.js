@@ -6,5 +6,6 @@ router.get("/", inventarioController.getAllInventario);
 router.get("/with-details", inventarioController.getAllInventarioWithDetails);
 router.post("/", inventarioController.createInventario);
 router.put("/update-cantidad", inventarioController.updateCantidad);
+router.put("/update-ubicacion", inventarioController.updateUbicacion);
 
 module.exports = router;

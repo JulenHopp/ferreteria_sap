@@ -34,6 +34,23 @@ const productosModel = {
       });
     });
   },
+
+  updateById: async (id, { nombre, categoria_id }) => {
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE Productos
+        SET nombre = ?, categoria_id = ?
+        WHERE id = ?
+      `;
+      db.prepare(query, (err, statement) => {
+        if (err) return reject(err);
+        statement.exec([nombre, categoria_id, id], (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+    });
+  },
 };
 
 module.exports = productosModel;

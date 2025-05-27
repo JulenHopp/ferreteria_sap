@@ -46,6 +46,23 @@ const inventarioModel = {
         }
       );
     });
+  },
+
+  updateUbicacion: async ({ inventario_id, ubicacion }) => {
+    return new Promise((resolve, reject) => {
+      db.exec(
+        `
+          UPDATE INVENTARIO
+          SET UBICACION = ?
+          WHERE id = ?;
+        `, 
+        [ubicacion, inventario_id], // aquí pasamos las variables
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
   }
 };
 
