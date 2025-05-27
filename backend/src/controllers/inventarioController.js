@@ -45,6 +45,22 @@ const inventarioController = {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
+  },
+
+  updateUbicacion: async (req, res) => {
+    try {
+      const { inventario_id, ubicacion } = req.body;
+
+      if (!inventario_id || !ubicacion) {
+        res.status(500).json({error: "producto o ubicacion no valida"});
+      }
+      await inventarioModel.updateUbicacion({ inventario_id, ubicacion })
+      res
+        .status(201)
+        .json({ message: "Cambio de ubicacion realizado exitosamente" });
+    } catch (err) {
+      res.status(500).json({error: err.message});
+    }
   }
 };
 
