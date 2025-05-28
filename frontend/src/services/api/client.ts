@@ -36,7 +36,8 @@ class ApiClient {
           // Handle unauthorized access
           localStorage.removeItem('token');
           localStorage.removeItem('rol_id');
-          window.location.href = '/login';
+          window.location.replace('/ferreteria_sap/login');
+          return Promise.reject(new Error('Unauthorized access. Please log in again.'));
         }
         return Promise.reject(error);
       }

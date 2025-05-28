@@ -74,7 +74,7 @@ export default function Pedidos() {
   );
 
   return (
-    <div style={{ width: "100%"}}>
+    <div style={{ width: "70%"}}>
 
       {/* Filtros */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>
@@ -99,7 +99,7 @@ export default function Pedidos() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
-        visibleRows={16}
+        visibleRows={14}
         scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{

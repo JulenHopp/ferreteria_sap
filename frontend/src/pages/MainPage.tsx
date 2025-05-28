@@ -5,20 +5,20 @@ import {
 } from '@ui5/webcomponents-react';
 import NavLayout from '../components/nav/NavLayout';
 import InventoryTable from '../components/tables/InventoryTable';
-import InventoryTableEdit from '../components/tables/InventoryTableEdit';
-import DashboardTable from '../components/tables/OrdersTable';
+import OrdersTable from '../components/tables/OrdersTable';
 import UsersTable from '../components/tables/UsersTable';
 import AiTable from '../components/tables/AiTable';
 import { navPermissions, NavItem } from "../auth/navPermissions";
+import { useAuth } from '../context/AuthContext';
 
 export default function Dashboard() {
     const [selectedKey, setSelectedKey] = useState("inventory");
-    const menuItems: NavItem[] = navPermissions[2] || []; // hardcoded admin for now
+    const { rol_id } = useAuth();
+    const menuItems: NavItem[] = navPermissions[rol_id] || [];
 
     const contentMap: Record<string, ReactNode> = {
         inventory: <InventoryTable />,
-        inventoryEdit: <InventoryTableEdit />,
-        orders: <DashboardTable />,
+        orders: <OrdersTable />,
         users: <UsersTable />,
         ai: <AiTable />
     };

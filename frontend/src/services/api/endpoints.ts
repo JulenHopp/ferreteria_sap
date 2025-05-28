@@ -8,42 +8,24 @@ export const API_ENDPOINTS = {
   },
   
   // User endpoints
-  users: {
-    base: '/users',
-    profile: '/users/profile',
-    updateProfile: '/users/profile/update',
-  },
-
-  // Product endpoints
-  products: {
-    base: '/products',
-    categories: '/products/categories',
-    search: '/products/search',
-  },
+//   users: {
+//     base: '/users',
+//     profile: '/users/profile',
+//     updateProfile: '/users/profile/update',
+//   },
 
   // Order endpoints
-  orders: {
-    base: '/orders',
-    status: '/orders/status',
-    history: '/orders/history',
-  },
+//   orders: {
+//     base: '/orders',
+//     status: '/orders/status',
+//     history: '/orders/history',
+//   },
 
   // Inventory endpoints
-  inventory: {
-    base: '/inventory',
-    stock: '/inventory/stock',
-    movements: '/inventory/movements',
-  },
+//   inventory: {
+//     base: '/inventory',
+//     stock: '/inventory/stock',
+//     movements: '/inventory/movements',
+//   },
 
-  // Supplier endpoints
-  suppliers: {
-    base: '/suppliers',
-    contacts: '/suppliers/contacts',
-  },
-
-  // Customer endpoints
-  customers: {
-    base: '/customers',
-    search: '/customers/search',
-  },
 } as const; 

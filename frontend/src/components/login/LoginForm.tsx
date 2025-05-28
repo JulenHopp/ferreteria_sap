@@ -52,7 +52,7 @@ export default function LoginForm() {
 
             console.log('Redirecting to dashboard...');
             // Redirect to dashboard with correct basename
-            navigate('/dashboard');
+            navigate('/homepage', { replace: true });
         } catch (err: any) {
             console.error('Login error:', err);
             setError(err.message || 'Error al iniciar sesión. Por favor, intente nuevamente.');

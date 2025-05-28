@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 
 import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
+import MainPage from './pages/MainPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
@@ -12,15 +12,15 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/homepage" replace />} />
         <Route path="/login" element={
-          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+          isAuthenticated ? <Navigate to="/homepage" replace /> : <LoginPage />
         } />
         <Route
-          path="/dashboard"
+          path="/homepage"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <MainPage />
             </ProtectedRoute>
           }
         />

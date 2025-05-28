@@ -16,7 +16,7 @@ export const navPermissions: { [key: number]: NavItem[] } = {
     { key: "users", text: "Usuarios", icon: "group" },
   ],
   2: [
-    { key: "inventoryEdit", text: "Inventario", icon: "list" },
+    { key: "inventory", text: "Inventario", icon: "list" },
   ],
   3: [
     { key: "inventory", text: "Inventario", icon: "list" },
