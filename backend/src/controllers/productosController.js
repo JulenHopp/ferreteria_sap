@@ -43,6 +43,15 @@ const productosController = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  getCategorias: async (req, res) => {
+    try {
+      const categorias = await productosModel.getAllCategorias();
+      res.status(200).json(categorias);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
 };
 
 module.exports = productosController;
