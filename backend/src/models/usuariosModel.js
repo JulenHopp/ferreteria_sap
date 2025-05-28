@@ -35,6 +35,15 @@ const UsuarioModel = {
       });
     });
   },
+
+  getAllRoles: async () => {
+    return new Promise((resolve, reject) => {
+      db.exec("SELECT * FROM Roles", (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      });
+    });
+  },
 };
 
 module.exports = UsuarioModel;
