@@ -11,16 +11,18 @@ sugerido_por_ia   bool
 creado_en         timestamp
 */
 
-const connectToHana = require('../config/db');
+const db = require("../config/db");
 
-async function getOrdenes() {
-  const conn = await connectToHana();
-  return new Promise((resolve, reject) => {
-    conn.exec('SELECT * FROM Ordenes', (err, rows) => {
-      if (err) reject(err);
-      else resolve(rows);
+const OrdenesModel = {
+  getAll: async () => {
+    return new Promise((resolve, reject) => {
+      db.exec("SELECT * FROM Ordenes", (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      });
     });
-  });
-}
+  },
+};
 
-module.exports = { getOrdenes };
+
+module.exports = OrdenesModel;
