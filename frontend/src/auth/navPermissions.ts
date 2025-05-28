@@ -10,17 +10,22 @@ export interface NavItem {
 }
 
 export const navPermissions: { [key: number]: NavItem[] } = {
+  //admin - admin@gmail.com
   1: [
     { key: "inventory", text: "Inventario", icon: "list" },
     { key: "orders", text: "Pedidos", icon: "inventory" },
     { key: "users", text: "Usuarios", icon: "group" },
   ],
+  
+  //almacenista - almacen@gmail.com
   2: [
-    { key: "inventory", text: "Inventario", icon: "list" },
-  ],
-  3: [
     { key: "inventory", text: "Inventario", icon: "list" },
     { key: "orders", text: "Pedidos", icon: "inventory" },
     { key: "ai", text: "Asistencia IA", icon: "ai" },
+  ],
+
+  //comprador - comprador@gmail.com
+  3: [
+    { key: "inventory", text: "Inventario", icon: "list" },
   ],
 };

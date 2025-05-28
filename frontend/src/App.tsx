@@ -1,10 +1,9 @@
-import './App.css'
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './auth/AuthContext';
 
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
-import ProtectedRoute from './components/auth/ProtectedRoute';
+import ProtectedRoute from './auth/ProtectedRoute';
 
 function App() {
   const { isAuthenticated } = useAuth();

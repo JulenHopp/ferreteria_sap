@@ -8,7 +8,7 @@ import {
     Popover,
     Button
 } from '@ui5/webcomponents-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 interface NavLayoutProps {
