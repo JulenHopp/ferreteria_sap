@@ -16,15 +16,15 @@ export const navPermissions: { [key: number]: NavItem[] } = {
     { key: "orders", text: "Pedidos", icon: "inventory" },
     { key: "users", text: "Usuarios", icon: "group" },
   ],
-  
-  //almacenista - almacen@gmail.com
+
+  //comprador - comprador@gmail.com
   2: [
     { key: "inventory", text: "Inventario", icon: "list" },
     { key: "orders", text: "Pedidos", icon: "inventory" },
     { key: "ai", text: "Asistencia IA", icon: "ai" },
   ],
-
-  //comprador - comprador@gmail.com
+  
+  //almacenista - almacen@gmail.com
   3: [
     { key: "inventory", text: "Inventario", icon: "list" },
   ],
