@@ -31,6 +31,18 @@ const productosController = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  updateProducto: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { nombre, categoria_id } = req.body;
+
+      await productosModel.updateById(id, { nombre, categoria_id });
+      res.status(200).json({ message: "Producto actualizado correctamente" });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
 };
 
 module.exports = productosController;
