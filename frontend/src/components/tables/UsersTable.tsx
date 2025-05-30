@@ -97,7 +97,7 @@ export default function Usuarios() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
-        visibleRows={16}
+        visibleRows={14}
         scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
@@ -113,7 +113,7 @@ export default function Usuarios() {
         <Dialog
           open={dialogAgregarOpen}
           headerText="Agregar nuevo usuario"
-          onAfterClose={() => setDialogAgregarOpen(false)}
+          // onAfterClose={() => setDialogAgregarOpen(false)}
           footer={
             <>
               <Button onClick={() => setDialogAgregarOpen(false)}>Cancelar</Button>
@@ -146,7 +146,7 @@ export default function Usuarios() {
         <Dialog
           open={dialogEditarOpen}
           headerText={`Editar usuario ${usuarioEditando.id}`}
-          onAfterClose={() => setDialogEditarOpen(false)}
+          // onAfterClose={() => setDialogEditarOpen(false)}
           footer={
             <>
               <Button onClick={() => setDialogEditarOpen(false)}>Cancelar</Button>
