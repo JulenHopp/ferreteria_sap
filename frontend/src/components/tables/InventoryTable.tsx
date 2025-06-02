@@ -29,21 +29,21 @@ export default function Inventario() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchInventory = async () => {
-      try {
-        setLoading(true);
-        const inventoryData = await InventoryService.getAllInventory();
-        setData(inventoryData);
-        setError(null);
-      } catch (err) {
-        setError('Error al cargar el inventario');
-        console.error('Error fetching inventory:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchInventory = async () => {
+    try {
+      setLoading(true);
+      const inventoryData = await InventoryService.getAllInventory();
+      setData(inventoryData);
+      setError(null);
+    } catch (err) {
+      setError('Error al cargar el inventario');
+      console.error('Error fetching inventory:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchInventory();
   }, []);
 
@@ -58,8 +58,8 @@ export default function Inventario() {
 
   const handleSaveChanges = async (updatedItem: InventoryItem) => {
     try {
-      const result = await InventoryService.updateInventory(updatedItem);
-      setData(prevData => prevData.map(item => item.ID === result.ID ? result : item));
+      await InventoryService.updateInventory(updatedItem);
+      await fetchInventory(); // Fetch fresh data after successful update
     } catch (error) {
       console.error('Error updating inventory:', error);
     }

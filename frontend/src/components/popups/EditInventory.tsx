@@ -12,9 +12,10 @@ import {
   BusyIndicator,
   MessageBox,
   Select,
-  Option
+  Option,
+  TextAlign
 } from "@ui5/webcomponents-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { InventoryItem } from "../../services/api/inventory.service";
 
 interface EditInventoryProps {
@@ -28,23 +29,20 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-  const uniqueCategories = [...new Set(data.map(item => item.CATEGORIA))];
-
-  useEffect(() => {
-    if (selectedItem) {
-      setSelectedCategory(selectedItem.CATEGORIA);
-    } else {
-      setSelectedCategory("");
+  const categoryMap = data.reduce((acc, item) => {
+    if (item.CATEGORIA && !acc[item.CATEGORIA]) {
+      acc[item.CATEGORIA] = item.CATEGORIA_ID;
     }
-  }, [selectedItem]);
+    return acc;
+  }, {} as Record<string, number>);
+
+  const uniqueCategories = Object.keys(categoryMap);
 
   const handleItemSelect = (e: any) => {
     const selectedValue = e.target.value;
     if (!selectedValue) {
       setSelectedItem(null);
-      setSelectedCategory("");
       return;
     }
 
@@ -78,9 +76,14 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
   };
 
   const handleCategoryChange = (e: any) => {
-    const newCategory = e.detail.selectedOption.value;
-    setSelectedCategory(newCategory);
-    handleInputChange('CATEGORIA', newCategory);
+    const categoryName = e.detail.selectedOption.value;
+    if (selectedItem) {
+      setSelectedItem(prev => prev ? {
+        ...prev,
+        CATEGORIA: categoryName,
+        CATEGORIA_ID: categoryMap[categoryName] || prev.CATEGORIA_ID
+      } : null);
+    }
   };
 
   return (
@@ -89,11 +92,11 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
       header={
         <Bar>
           <Title>Editar Inventario</Title>
-          <Button icon="decline" design="Transparent" onClick={onClose} />
+          <Button icon="decline" design="Transparent" onClick={onClose}/>
         </Bar>
       }
       onClose={onClose}
-      style={{ width: "30%" }}
+      style={{ width: "45%" }}
     >
       <Form style={{ padding: "0.5rem" }}>
         {error && (
@@ -134,7 +137,7 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
         <FormItem>
           <Label>Categoría</Label>
           <Select
-            value={selectedCategory}
+            value={selectedItem?.CATEGORIA || ""}
             onChange={handleCategoryChange}
           >
             <Option value="">Seleccionar categoría</Option>
