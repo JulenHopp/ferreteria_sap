@@ -63,6 +63,41 @@ const inventarioModel = {
         }
       );
     });
+  },
+
+  updateInventoryAndProductDetails: async ({
+    inventario_id,
+    producto_id,
+    nombre,
+    categoria_id,
+    cantidad,
+    descripcion,
+    ubicacion,
+    precio_unitario
+  }) => {
+    return new Promise((resolve, reject) => {
+      db.exec(
+        `
+        CALL editar_inventario_y_producto(?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+        [
+          inventario_id,
+          producto_id,
+          nombre,
+          categoria_id,
+          cantidad,
+          descripcion,
+          ubicacion,
+          precio_unitario
+        ],
+        (err, result) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve(result);
+        }
+      );
+    });
   }
 };
 
