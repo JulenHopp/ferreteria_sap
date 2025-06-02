@@ -1,20 +1,21 @@
 import { apiClient } from './client';
 import { API_ENDPOINTS } from './endpoints';
-import { ApiResponse, LoginRequest, LoginResponse } from './types';
+
+// Types
+export interface LoginRequest {
+  correo: string;
+  contrasena: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  rol_id: number;
+  user_id: number;
+}
 
 export class AuthService {
   static async login(credentials: LoginRequest): Promise<LoginResponse> {
-    try {
-      const response = await apiClient.post<LoginResponse>(API_ENDPOINTS.auth.login, credentials);
-      
-      if (!response || !response.token || !response.rol_id) {
-        throw new Error('Invalid response from server');
-      }
-      
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    return apiClient.post<LoginResponse>(API_ENDPOINTS.auth.login, credentials);
   }
 
 //   static async register(userData: Partial<User>): Promise<ApiResponse<User>> {

@@ -20,6 +20,15 @@ const UsuarioController = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  getRoles: async (req, res) => {
+    try {
+      const roles = await UsuarioModel.getAllRoles();
+      res.status(201).json(roles);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
 };
 
 module.exports = UsuarioController;

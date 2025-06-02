@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const UsuarioModel = {
   getAll: async () => {
     return new Promise((resolve, reject) => {
-      db.exec("SELECT * FROM Usuarios", (err, result) => {
+      db.exec("SELECT * FROM usuarios_with_details", (err, result) => {
         if (err) return reject(err);
         resolve(result);
       });
@@ -32,6 +32,15 @@ const UsuarioModel = {
           if (err) return reject(err);
           resolve(result);
         });
+      });
+    });
+  },
+
+  getAllRoles: async () => {
+    return new Promise((resolve, reject) => {
+      db.exec("SELECT * FROM Roles", (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
       });
     });
   },

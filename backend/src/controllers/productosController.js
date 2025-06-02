@@ -52,6 +52,16 @@ const productosController = {
       res.status(500).json({ error: err.message });
     }
   },
+
+  createCategory: async (req, res) => {
+    try {
+      const { nombre } = req.body
+      await productosModel.createCategory(nombre);
+      res.status(200).json({message: "Categoria creada correctamente"});
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  },
 };
 
 module.exports = productosController;
