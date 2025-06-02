@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   
   // Inventory endpoints
   inventory: {
-    all_inventory: '/inventario/with-details'
+    all_inventory: '/inventario/with-details',
+    update: '/inventario/update-inventario-producto'
   }
 } as const;

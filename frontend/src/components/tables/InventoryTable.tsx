@@ -11,73 +11,14 @@ import {
 import EditInventory from "../popups/EditInventory";
 import { InventoryService, InventoryItem } from "../../services/api/inventory.service";
 
-// Filter component
-const InventoryFilters = ({ 
-  filtro, 
-  setFiltro, 
-  categoria, 
-  setCategoria, 
-  uniqueCategories,
-  onEditClick 
-}: {
-  filtro: string;
-  setFiltro: (value: string) => void;
-  categoria: string;
-  setCategoria: (value: string) => void;
-  uniqueCategories: string[];
-  onEditClick: () => void;
-}) => (
-  <div style={{
-    display: "flex",
-    gap: "1rem",
-    alignItems: "center",
-    marginBottom: "1.5rem"
-  }}>
-    <Input
-      placeholder="Escribe nombre"
-      value={filtro}
-      onInput={(e) => setFiltro((e.target as unknown as HTMLInputElement).value)}
-      style={{ width: "250px" }}
-    />
-    <Select
-      value={categoria}
-      onChange={(e) => setCategoria(e.detail.selectedOption.value || "")}
-      style={{ width: "200px" }}
-    >
-      <Option value="">Seleccionar Categoría</Option>
-      {uniqueCategories.map((cat) => (
-        <Option key={cat} value={cat}>{cat}</Option>
-      ))}
-    </Select>
-    <Button onClick={onEditClick}>Editar Inventario</Button>
-  </div>
-);
-
 const TABLE_COLUMNS = [
-  {
-    Header: "Nombre del producto",
-    accessor: "NOMBRE"
-  },
-  {
-    Header: "Categoría",
-    accessor: "CATEGORIA",
-  },
-  {
-    Header: "Cantidad de producto",
-    accessor: "CANTIDAD"
-  },
-  {
-    Header: "Descripción",
-    accessor: "DESCRIPCION"
-  },
-  {
-    Header: "Ubicación",
-    accessor: "UBICACION"
-  },
-  {
-    Header: "Precio",
-    accessor: "PRECIO_UNITARIO"
-  }
+  { Header: "ID", accessor: "ID" },
+  { Header: "Nombre del producto", accessor: "NOMBRE_PRODUCTO" },
+  { Header: "Categoría", accessor: "CATEGORIA" },
+  { Header: "Cantidad", accessor: "CANTIDAD" },
+  { Header: "Descripción", accessor: "DESCRIPCION" },
+  { Header: "Ubicación", accessor: "UBICACION" },
+  { Header: "Precio", accessor: "PRECIO_UNITARIO" }
 ];
 
 export default function Inventario() {
@@ -106,18 +47,22 @@ export default function Inventario() {
     fetchInventory();
   }, []);
 
-  const dataFiltrada = data.filter(
-    (item) =>
-      item.NOMBRE.toLowerCase().includes(filtro.trim().toLowerCase()) &&
-      (categoria ? item.CATEGORIA === categoria : true)
-  );
+  const dataFiltrada = data.filter((item) => {
+    const searchText = filtro.trim().toLowerCase();
+    const itemName = String(item.NOMBRE_PRODUCTO || '').toLowerCase();
+    const itemCategory = String(item.CATEGORIA || '');
+    
+    return (searchText === '' || itemName.includes(searchText)) &&
+           (categoria === '' || itemCategory === categoria);
+  });
 
-  const handleSaveChanges = (updatedItem: InventoryItem) => {
-    setData((prevData) =>
-      prevData.map((item) =>
-        item.ID === updatedItem.ID ? updatedItem : item
-      )
-    );
+  const handleSaveChanges = async (updatedItem: InventoryItem) => {
+    try {
+      const result = await InventoryService.updateInventory(updatedItem);
+      setData(prevData => prevData.map(item => item.ID === result.ID ? result : item));
+    } catch (error) {
+      console.error('Error updating inventory:', error);
+    }
   };
 
   const uniqueCategories = [...new Set(data.map(item => item.CATEGORIA))];
@@ -132,19 +77,31 @@ export default function Inventario() {
 
   return (
     <div style={{ width: "100%" }}>
-      <InventoryFilters
-        filtro={filtro}
-        setFiltro={setFiltro}
-        categoria={categoria}
-        setCategoria={setCategoria}
-        uniqueCategories={uniqueCategories}
-        onEditClick={() => setIsDialogOpen(true)}
-      />
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>
+        <Input
+          placeholder="Buscar por nombre"
+          value={filtro}
+          onInput={(e) => setFiltro((e.target as unknown as HTMLInputElement).value)}
+          style={{ width: "250px" }}
+        />
+        <Select
+          value={categoria}
+          onChange={(e) => setCategoria(e.detail.selectedOption.value || "")}
+          style={{ width: "200px" }}
+        >
+          <Option value="">Todas las categorías</Option>
+          {uniqueCategories.map((cat) => (
+            <Option key={cat} value={cat}>{cat}</Option>
+          ))}
+        </Select>
+        <Button onClick={() => setIsDialogOpen(true)}>Editar Inventario</Button>
+      </div>
 
       <AnalyticalTable
         columns={TABLE_COLUMNS}
         data={dataFiltrada}
         visibleRows={14}
+        sortable={true}
         scaleWidthMode="Grow"
         noDataText="No hay datos disponibles"
         style={{
