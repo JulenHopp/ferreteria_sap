@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     FlexBox,
     Card,
@@ -11,8 +10,6 @@ import "@ui5/webcomponents-icons/dist/money-bills.js";
 import "@ui5/webcomponents-icons/dist/cart.js";
 import "@ui5/webcomponents-icons/dist/product.js";
 import "@ui5/webcomponents-icons/dist/customer.js";
-import InventoryTable from './InventoryTable';
-import UsersTable from './UsersTable';
 
 // Mock data - replace with real data from your API
 const mockData = {
@@ -112,7 +109,7 @@ export default function DashboardTable() {
                 </FlexBox>
                 <FlexBox style={{ flex: '1', minWidth: '250px' }}>
                     <StatCard 
-                        title="Total Users" 
+                        title="Total Buyers" 
                         value={mockData.totalUsers} 
                         icon="customer"
                     />
@@ -174,46 +171,7 @@ export default function DashboardTable() {
                         />
                     </div>
                 </Card>
-            </FlexBox>
-
-            {/* Two Column Layout */}
-            <FlexBox style={{ gap: '1rem' }}>
-                {/* Inventory Status */}
-                <Card
-                    style={{ flex: 1, padding: '1rem' }}
-                    header={
-                        <Title 
-                            level="H4" 
-                            style={{ 
-                                padding: '1rem 1rem 0.5rem 1rem',
-                                borderBottom: '1px solid var(--sapList_BorderColor)'
-                            }}
-                        >
-                            Inventory Status
-                        </Title>
-                    }
-                >
-                    <InventoryTable />
-                </Card>
-
-                {/* Users */}
-                <Card
-                    style={{ flex: 1, padding: '1rem' }}
-                    header={
-                        <Title 
-                            level="H4" 
-                            style={{ 
-                                padding: '1rem 1rem 0.5rem 1rem',
-                                borderBottom: '1px solid var(--sapList_BorderColor)'
-                            }}
-                        >
-                            Users
-                        </Title>
-                    }
-                >
-                    <UsersTable />
-                </Card>
-            </FlexBox>
+            </FlexBox>            
         </FlexBox>
     );
 } 
