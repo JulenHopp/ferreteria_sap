@@ -11,7 +11,7 @@ import UsersTable from '../components/tables/UsersTable';
 import AiTable from '../components/tables/AiTable';
 import DashboardTable from '../components/tables/DashboardTable';
 import { navPermissions, NavItem } from "../auth/navPermissions";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
 export default function MainPage() {
     const [selectedKey, setSelectedKey] = useState("dashboard");

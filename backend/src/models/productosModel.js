@@ -51,6 +51,28 @@ const productosModel = {
       });
     });
   },
+
+  getAllCategorias: async () => {
+    return new Promise((resolve, reject) => {
+      db.exec("SELECT * FROM Categorias", (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      });
+    });
+  },
+
+  createCategory: async (nombre) => {
+    return new Promise((resolve, reject) => {
+      const query = "INSERT INTO Categorias (NOMBRE) VALUES (?);"
+      db.prepare(query, (err, statement) => {
+        if (err) return reject(err);
+        statement.exec([nombre], (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+    })
+  },
 };
 
 module.exports = productosModel;

@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import { AuthService } from "../../services/api/auth.service";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 
 export default function LoginForm() {
     const [correo, setCorreo] = useState("");

@@ -74,7 +74,7 @@ export default function Pedidos() {
   );
 
   return (
-    <div style={{ width: "70%"}}>
+    <div style={{ width: "100%"}}>
 
       {/* Filtros */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>

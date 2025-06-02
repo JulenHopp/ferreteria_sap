@@ -5,5 +5,7 @@ const productosController = require("../controllers/productosController");
 router.get("/", productosController.getAllProductos);
 router.post("/", productosController.createProducto);
 router.put("/:id", productosController.updateProducto);
+router.get("/categorias", productosController.getCategorias);
+router.post("/categorias", productosController.createCategory);
 
 module.exports = router;
