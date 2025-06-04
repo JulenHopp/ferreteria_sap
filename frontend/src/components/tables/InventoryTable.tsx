@@ -12,7 +12,7 @@ import EditInventory from "../popups/EditInventory";
 import { InventoryItem } from "../../services/api/inventory.service";
 
 const TABLE_COLUMNS = [
-  { Header: "ID", accessor: "ID" },
+  // { Header: "ID", accessor: "ID" },
   { Header: "Nombre del producto", accessor: "NOMBRE_PRODUCTO" },
   { Header: "Categoría", accessor: "CATEGORIA" },
   { Header: "Cantidad", accessor: "CANTIDAD" },
