@@ -5,7 +5,7 @@ import {
 } from '@ui5/webcomponents-react';
 import "@ui5/webcomponents-icons/dist/home.js";
 import NavLayout from '../components/nav/NavLayout';
-import InventoryTable from '../components/tables/InventoryTable';
+import InventoryTab from '../components/tabs/InventoryTab';
 import OrdersTable from '../components/tables/OrdersTable';
 import UsersTable from '../components/tables/UsersTable';
 import AiPage from './AiPage';
@@ -20,7 +20,7 @@ export default function MainPage() {
 
     const contentMap: Record<string, ReactNode> = {
         dashboard: <DashboardTable />,
-        inventory: <InventoryTable />,
+        inventory: <InventoryTab />,
         orders: <OrdersTable />,
         users: <UsersTable />,
         ai: <AiPage />
