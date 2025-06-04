@@ -8,7 +8,7 @@ import NavLayout from '../components/nav/NavLayout';
 import InventoryTable from '../components/tables/InventoryTable';
 import OrdersTable from '../components/tables/OrdersTable';
 import UsersTable from '../components/tables/UsersTable';
-import AiTable from '../components/tables/AiTable';
+import AiPage from './AiPage';
 import DashboardTable from '../components/tables/DashboardTable';
 import { navPermissions, NavItem } from "../auth/navPermissions";
 import { useAuth } from '../auth/AuthContext';
@@ -23,7 +23,7 @@ export default function MainPage() {
         inventory: <InventoryTable />,
         orders: <OrdersTable />,
         users: <UsersTable />,
-        ai: <AiTable />
+        ai: <AiPage />
     };
 
     return (
