@@ -38,12 +38,11 @@ export default function InventoryTab() {
   return (
     <div style={{ 
       display: 'flex', 
-      gap: '2rem', 
-      padding: '1rem',
+      gap: '1rem', 
       height: '100%',
-      maxWidth: 'fit-content',
+      width: '100%'
     }}>
-      <div style={{ flex: 2}}>
+      <div style={{ flex: '1 1 70%', minWidth: 0 }}>
         <InventoryTable 
           data={data} 
           loading={loading} 
@@ -51,7 +50,7 @@ export default function InventoryTab() {
           onSave={handleSaveChanges}
         />
       </div>
-      <div style={{ flex: 1}}>
+      <div style={{ flex: '1 1 30%', minWidth: 0, maxWidth: '400px' }}>
         <InventoryAnalytics data={data} />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode, useEffect } from 'react';
 import {
     SideNavigation,
     SideNavigationItem,
@@ -13,10 +13,26 @@ import DashboardTable from '../components/tables/DashboardTable';
 import { navPermissions, NavItem } from "../auth/navPermissions";
 import { useAuth } from '../auth/AuthContext';
 
+const STORAGE_KEY = 'selectedTab';
+
 export default function MainPage() {
-    const [selectedKey, setSelectedKey] = useState("dashboard");
     const { rol_id } = useAuth();
     const menuItems: NavItem[] = navPermissions[rol_id] || [];
+    
+    // Initialize state from session storage or default to dashboard
+    const [selectedKey, setSelectedKey] = useState(() => {
+        const saved = sessionStorage.getItem(STORAGE_KEY);
+        // Validate that the saved key exists in the current user's permissions
+        if (saved && (saved === 'dashboard' || menuItems.some(item => item.key === saved))) {
+            return saved;
+        }
+        return 'dashboard';
+    });
+
+    // Update session storage when selectedKey changes
+    useEffect(() => {
+        sessionStorage.setItem(STORAGE_KEY, selectedKey);
+    }, [selectedKey]);
 
     const contentMap: Record<string, ReactNode> = {
         dashboard: <DashboardTable />,
@@ -26,13 +42,16 @@ export default function MainPage() {
         ai: <AiPage />
     };
 
+    const handleSelectionChange = (e: any) => {
+        const newKey = e.detail.item.dataset.key ?? menuItems[0]?.key ?? "dashboard";
+        setSelectedKey(newKey);
+    };
+
     return (
         <NavLayout
             sideContent={
                 <SideNavigation
-                    onSelectionChange={(e) =>
-                        setSelectedKey(e.detail.item.dataset.key ?? menuItems[0]?.key ?? "dashboard")
-                    }
+                    onSelectionChange={handleSelectionChange}
                 >
                     <SideNavigationItem
                         key="dashboard"

@@ -79,7 +79,7 @@ export default function InventoryTable({ data, loading, error, onSave }: Invento
         data={dataFiltrada}
         visibleRows={14}
         sortable={true}
-        scaleWidthMode="Grow"
+        scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
           width: "100%",
