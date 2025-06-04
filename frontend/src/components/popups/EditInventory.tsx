@@ -13,7 +13,6 @@ import {
   MessageBox,
   Select,
   Option,
-  TextAlign
 } from "@ui5/webcomponents-react";
 import { useState } from "react";
 import { InventoryItem } from "../../services/api/inventory.service";

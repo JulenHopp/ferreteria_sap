@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './auth/AuthContext';
 
 import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
+import HomePage from './pages/HomePage';
 import ProtectedRoute from './auth/ProtectedRoute';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           path="/homepage"
           element={
             <ProtectedRoute>
-              <MainPage />
+              <HomePage />
             </ProtectedRoute>
           }
         />
