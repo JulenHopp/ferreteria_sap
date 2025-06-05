@@ -1,0 +1,4 @@
+INSERT INTO Usuarios(nombre, correo, contrasena, rol_id) VALUES('Julen Hopp', 'julenhopp@gmail.com', '$2b$10$ZuZUl7iB7h/GwANSIEXmzud.U.Ub6EExBPFdmAeSf48PPwcUvlZtO', 1);
+INSERT INTO Usuarios(nombre, correo, contrasena, rol_id) VALUES('Julen Admin', 'admin@gmail.com', '$2b$10$ZuZUl7iB7h/GwANSIEXmzud.U.Ub6EExBPFdmAeSf48PPwcUvlZtO', 1);
+INSERT INTO Usuarios(nombre, correo, contrasena, rol_id) VALUES('Julen Comprador', 'comprador@gmail.com', '$2b$10$ZuZUl7iB7h/GwANSIEXmzud.U.Ub6EExBPFdmAeSf48PPwcUvlZtO', 2);
+INSERT INTO Usuarios(nombre, correo, contrasena, rol_id) VALUES('Julen Almacen', 'almacen@gmail.com', '$2b$10$ZuZUl7iB7h/GwANSIEXmzud.U.Ub6EExBPFdmAeSf48PPwcUvlZtO', 3);

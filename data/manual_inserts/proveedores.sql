@@ -1,0 +1,10 @@
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Distribuidora Julen', 'ventas@distribuidorajulen.com', '8931233367');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Suministros Monterrey', 'contacto@suministrosmt.com', '8185551234');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Ferretería del Norte', 'ventas@ferreterianorte.mx', '8112224567');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('FerreTools SA de CV', 'contacto@ferretools.com', '8180001122');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Distribuidora Eléctrica del Norte', 'ventas@electro-norte.com', '8182003344');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Grupo Tornillos y Más', 'info@tornillosymas.mx', '8183005566');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Suministros Industriales Regios', 'clientes@suminregios.com', '8184007788');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Pinturas y Selladores del Sur', 'pedidos@pinturassur.com', '8185009900');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Soluciones Plomería MX', 'soporte@plomeriamx.com', '8186001122');
+INSERT INTO Proveedores (nombre, correo, telefono) VALUES('Materiales del Valle', 'ventas@materialesvalle.com', '8187003344');
