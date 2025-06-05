@@ -10,11 +10,20 @@ export interface CreateUserRequest {
 }
 
 export interface User {
+  USUARIO_ID: number;
   NOMBRE: string;
   EMAIL: string;
   ROL_ID: number;
   ROL: string;
   FECHA_CREACION: string;
+}
+
+// Added interface for update request body
+export interface UpdateUserRequest {
+  nombre?: string;
+  correo?: string;
+  contrasena?: string;
+  rol_id?: number;
 }
 
 // Added Role interface based on API structure
@@ -57,6 +66,32 @@ export class UserService {
       return response;
     } catch (error) {
       console.error('Error fetching roles:', error);
+      throw error;
+    }
+  }
+
+  // Added updateUser method
+  static async updateUser(userId: number, updateData: UpdateUserRequest): Promise<User> {
+    console.log(`Updating user ${userId} with data:`, updateData);
+    try {
+      const response = await apiClient.put<User>(API_ENDPOINTS.user.update(userId), updateData);
+      console.log(`Update user ${userId} response:`, response);
+      return response;
+    } catch (error) {
+      console.error(`Error updating user ${userId}:`, error);
+      throw error;
+    }
+  }
+
+  // Added deleteUser method
+  static async deleteUser(userId: number): Promise<void> {
+    console.log(`Deleting user with ID: ${userId}`);
+    try {
+      // Assuming the DELETE endpoint returns a success status without a body
+      await apiClient.delete(API_ENDPOINTS.user.delete(userId));
+      console.log(`User with ID ${userId} deleted successfully.`);
+    } catch (error) {
+      console.error(`Error deleting user ${userId}:`, error);
       throw error;
     }
   }

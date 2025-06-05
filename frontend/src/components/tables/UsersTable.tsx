@@ -3,12 +3,12 @@ import {
   AnalyticalTable,
   Input,
   Button,
-  Dialog,
   BusyIndicator,
   Text
 } from "@ui5/webcomponents-react";
-import { UserService, User, CreateUserRequest } from "../../services/api/user.service";
+import { UserService, User, CreateUserRequest, UpdateUserRequest } from "../../services/api/user.service";
 import AddUser from "../popups/AddUser";
+import EditDeleteUser from "../popups/EditDeleteUser";
 
 export default function Usuarios() {
   const [filtro, setFiltro] = useState("");
@@ -56,18 +56,33 @@ export default function Usuarios() {
   };
 
   const handleEditar = (usuario: User) => {
-    setUsuarioEditando({ ...usuario });
+    setUsuarioEditando(usuario);
     setDialogEditarOpen(true);
   };
 
-  const guardarEdicion = () => {
-    console.log("Guardar edición:", usuarioEditando);
-    setDialogEditarOpen(false);
+  const handleUserSaved = async (userId: number, updateData: UpdateUserRequest) => {
+    try {
+      await UserService.updateUser(userId, updateData);
+      await fetchUsers();
+      setDialogEditarOpen(false);
+    } catch (err) {
+      console.error("Error saving user:", err);
+      setError("Error al guardar usuario");
+      throw err;
+    }
   };
 
-  const eliminarUsuario = () => {
-    console.log("Eliminar usuario:", usuarioEditando);
-    setDialogEditarOpen(false);
+  const handleUserDeleted = async (userId: number) => {
+    try {
+      await UserService.deleteUser(userId);
+      await fetchUsers();
+      setDialogEditarOpen(false);
+      setUsuarioEditando(null);
+    } catch (err) {
+      console.error("Error deleting user:", err);
+      setError("Error al eliminar usuario");
+      throw err;
+    }
   };
 
   const columns = [
@@ -106,7 +121,6 @@ export default function Usuarios() {
 
   return (
     <div style={{ width: "100%" }}>
-      {/* Filtro y botón agregar */}
       <div style={{
         display: "flex",
         alignItems: "center",
@@ -122,7 +136,6 @@ export default function Usuarios() {
         <Button onClick={handleAgregar}>Agregar usuario</Button>
       </div>
 
-      {/* Tabla */}
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
@@ -138,59 +151,20 @@ export default function Usuarios() {
         }}
       />
 
-      {/* AddUser Modal */}
       <AddUser
         isOpen={dialogAgregarOpen}
         onClose={() => setDialogAgregarOpen(false)}
         onAdd={handleUserAdded}
       />
 
-      {/* Modal Editar */}
       {dialogEditarOpen && usuarioEditando && (
-        <Dialog
-          open={dialogEditarOpen}
-          headerText={`Editar usuario ${usuarioEditando.NOMBRE}`}
-          footer={
-            <>
-              <Button onClick={() => setDialogEditarOpen(false)}>Cancelar</Button>
-              <Button onClick={eliminarUsuario} design="Negative">Eliminar</Button>
-              <Button onClick={guardarEdicion} design="Emphasized">Guardar</Button>
-            </>
-          }
-        >
-          <div style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <Input
-              placeholder="Nombre"
-              value={usuarioEditando.NOMBRE}
-              onInput={(e) =>
-                setUsuarioEditando({
-                  ...usuarioEditando,
-                  NOMBRE: ((e.target as unknown) as HTMLInputElement).value
-                })
-              }
-            />
-            <Input
-              placeholder="Correo"
-              value={usuarioEditando.EMAIL}
-              onInput={(e) =>
-                setUsuarioEditando({
-                  ...usuarioEditando,
-                  EMAIL: ((e.target as unknown) as HTMLInputElement).value
-                })
-              }
-            />
-            <Input
-              placeholder="Rol"
-              value={usuarioEditando.ROL}
-              onInput={(e) =>
-                setUsuarioEditando({
-                  ...usuarioEditando,
-                  ROL: ((e.target as unknown) as HTMLInputElement).value
-                })
-              }
-            />
-          </div>
-        </Dialog>
+        <EditDeleteUser
+          isOpen={dialogEditarOpen}
+          onClose={() => { setDialogEditarOpen(false); setUsuarioEditando(null); }}
+          user={usuarioEditando}
+          onSave={handleUserSaved}
+          onDelete={handleUserDeleted}
+        />
       )}
     </div>
   );

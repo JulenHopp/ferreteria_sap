@@ -14,6 +14,8 @@ export const API_ENDPOINTS = {
   user: {
     all_users: '/usuarios', // GET
     create: '/usuarios', // POST
-    roles: '/usuarios/roles' // GET - Added roles endpoint
+    roles: '/usuarios/roles', // GET
+    update: (userId: number) => `/usuarios/${userId}`, // PUT
+    delete: (userId: number) => `/usuarios/${userId}` // DELETE - Dynamic endpoint for delete
   }
 } as const;
