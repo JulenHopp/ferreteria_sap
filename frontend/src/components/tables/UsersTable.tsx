@@ -1,79 +1,108 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AnalyticalTable,
   Input,
   Button,
-  Dialog
+  Dialog,
+  BusyIndicator,
+  Text
 } from "@ui5/webcomponents-react";
+import { UserService, User, CreateUserRequest } from "../../services/api/user.service";
+import AddUser from "../popups/AddUser";
 
 export default function Usuarios() {
   const [filtro, setFiltro] = useState("");
+  const [data, setData] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const [data, setData] = useState([
-    { id: "001", nombre: "Rodrigo Kalionchiz", correo: "rodrigok@fjulen.com.mx", rol: "Dueño" },
-    { id: "002", nombre: "Eugenio Garza", correo: "eugeniog@fjulen.com.mx", rol: "Almacenador" },
-    { id: "003", nombre: "Julen Hernandez", correo: "julenh@fjulen.com.mx", rol: "Almacenador" },
-    { id: "004", nombre: "Adolfo Gonzalez", correo: "adolfofg@fjulen.com.mx", rol: "Almacenador" },
-    { id: "005", nombre: "Marcelo Cardenas", correo: "marceloc@fjulen.com.mx", rol: "Comprador" },
-    { id: "006", nombre: "Danny Wu", correo: "dannyw@fjulen.com.mx", rol: "Comprador" },
-    { id: "007", nombre: "Ricardo Chapa", correo: "ricardoc@fjulen.com.mx", rol: "Almacenador" },
-    { id: "008", nombre: "Guillermo Montemayor", correo: "guillermom@fjulen.com.mx", rol: "Comprador" },
-    { id: "009", nombre: "Adrian Guereque", correo: "adriang@fjulen.com.mx", rol: "Comprador" },
-    { id: "010", nombre: "David Mireles", correo: "davidm@fjulen.com.mx", rol: "Comprador" },
-    { id: "011", nombre: "Emilio Vidal", correo: "emiliov@fjulen.com.mx", rol: "Comprador" },
-    { id: "012", nombre: "Alejandro Charles", correo: "alejandrodc@fjulen.com.mx", rol: "Comprador" },
-    { id: "013", nombre: "Mauricio Noriega", correo: "mauricion@fjulen.com.mx", rol: "Comprador" },
-    { id: "014", nombre: "Hugo Lozano", correo: "hugol@fjulen.com.mx", rol: "Comprador" },
-    { id: "015", nombre: "Alejandro Perea", correo: "alejandrop@fjulen.com.mx", rol: "Comprador" }
-  ]);
-
-  const [nuevoUsuario, setNuevoUsuario] = useState({ nombre: "", correo: "", rol: "" });
   const [dialogAgregarOpen, setDialogAgregarOpen] = useState(false);
 
-  const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const [usuarioEditando, setUsuarioEditando] = useState<User | null>(null);
   const [dialogEditarOpen, setDialogEditarOpen] = useState(false);
 
-  const handleAgregar = () => {
-    const nuevoId = (data.length + 1).toString().padStart(3, "0");
-    setData([...data, { id: nuevoId, ...nuevoUsuario }]);
-    setNuevoUsuario({ nombre: "", correo: "", rol: "" });
-    setDialogAgregarOpen(false);
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const usersData = await UserService.getAllUsers();
+      setData(usersData);
+      setError(null);
+    } catch (err) {
+      setError("Error al cargar los usuarios");
+      console.error("Error fetching users:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleEditar = (usuario) => {
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const handleAgregar = () => {
+    setDialogAgregarOpen(true);
+  };
+
+  const handleUserAdded = async (newUser: CreateUserRequest) => {
+    try {
+      await UserService.createUser(newUser);
+      await fetchUsers();
+      setDialogAgregarOpen(false);
+    } catch (err) {
+      console.error("Error adding user:", err);
+      setError("Error al agregar usuario");
+      throw err;
+    }
+  };
+
+  const handleEditar = (usuario: User) => {
     setUsuarioEditando({ ...usuario });
     setDialogEditarOpen(true);
   };
 
   const guardarEdicion = () => {
-    setData(prev =>
-      prev.map(u => (u.id === usuarioEditando.id ? usuarioEditando : u))
-    );
+    console.log("Guardar edición:", usuarioEditando);
     setDialogEditarOpen(false);
   };
 
   const eliminarUsuario = () => {
-    setData(prev => prev.filter(u => u.id !== usuarioEditando.id));
+    console.log("Eliminar usuario:", usuarioEditando);
     setDialogEditarOpen(false);
   };
 
   const columns = [
-    { Header: "Número de usuario", accessor: "id" },
-    { Header: "Nombre usuario", accessor: "nombre" },
-    { Header: "Correo", accessor: "correo" },
-    { Header: "Rol", accessor: "rol" },
+    { Header: "Nombre usuario", accessor: "NOMBRE" },
+    { Header: "Correo", accessor: "EMAIL" },
+    { Header: "Rol", accessor: "ROL" },
     {
-      Header: "Editar",
-      accessor: "editar",
-      Cell: ({ row }) => (
+      Header: "Fecha Creación",
+      accessor: "FECHA_CREACION",
+      Cell: ({ value }: { value: string }) => {
+        if (!value) return "";
+        const dotIndex = value.indexOf('.');
+        return dotIndex !== -1 ? value.substring(0, dotIndex) : value;
+      }
+    },
+    {
+      Header: "Acciones",
+      accessor: "actions",
+      Cell: ({ row }: { row: { original: User } }) => (
         <Button onClick={() => handleEditar(row.original)}>Editar</Button>
       )
     }
   ];
 
   const dataFiltrada = data.filter((item) =>
-    item.nombre.toLowerCase().includes(filtro.trim().toLowerCase())
+    item.NOMBRE.toLowerCase().includes(filtro.trim().toLowerCase())
   );
+
+  if (loading) {
+    return <BusyIndicator active={loading} size="L" style={{ margin: "10rem auto", display: "block" }} />;
+  }
+
+  if (error) {
+    return <Text style={{ color: "red" }}>{error}</Text>;
+  }
 
   return (
     <div style={{ width: "100%" }}>
@@ -90,7 +119,7 @@ export default function Usuarios() {
           onInput={(e) => setFiltro(((e.target as unknown) as HTMLInputElement).value)}
           style={{ width: "250px" }}
         />
-        <Button onClick={() => setDialogAgregarOpen(true)}>Agregar usuario</Button>
+        <Button onClick={handleAgregar}>Agregar usuario</Button>
       </div>
 
       {/* Tabla */}
@@ -98,6 +127,7 @@ export default function Usuarios() {
         columns={columns}
         data={dataFiltrada}
         visibleRows={14}
+        sortable={true}
         scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
@@ -108,45 +138,18 @@ export default function Usuarios() {
         }}
       />
 
-      {/* Modal Agregar */}
-      {dialogAgregarOpen && (
-        <Dialog
-          open={dialogAgregarOpen}
-          headerText="Agregar nuevo usuario"
-          // onAfterClose={() => setDialogAgregarOpen(false)}
-          footer={
-            <>
-              <Button onClick={() => setDialogAgregarOpen(false)}>Cancelar</Button>
-              <Button onClick={handleAgregar} design="Emphasized">Agregar</Button>
-            </>
-          }
-        >
-          <div style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <Input
-              placeholder="Nombre"
-              value={nuevoUsuario.nombre}
-              onInput={(e) => setNuevoUsuario({ ...nuevoUsuario, nombre: ((e.target as unknown) as HTMLInputElement).value })}
-            />
-            <Input
-              placeholder="Correo"
-              value={nuevoUsuario.correo}
-              onInput={(e) => setNuevoUsuario({ ...nuevoUsuario, correo: ((e.target as unknown) as HTMLInputElement).value })}
-            />
-            <Input
-              placeholder="Rol"
-              value={nuevoUsuario.rol}
-              onInput={(e) => setNuevoUsuario({ ...nuevoUsuario, rol: ((e.target as unknown) as HTMLInputElement).value })}
-            />
-          </div>
-        </Dialog>
-      )}
+      {/* AddUser Modal */}
+      <AddUser
+        isOpen={dialogAgregarOpen}
+        onClose={() => setDialogAgregarOpen(false)}
+        onAdd={handleUserAdded}
+      />
 
       {/* Modal Editar */}
       {dialogEditarOpen && usuarioEditando && (
         <Dialog
           open={dialogEditarOpen}
-          headerText={`Editar usuario ${usuarioEditando.id}`}
-          // onAfterClose={() => setDialogEditarOpen(false)}
+          headerText={`Editar usuario ${usuarioEditando.NOMBRE}`}
           footer={
             <>
               <Button onClick={() => setDialogEditarOpen(false)}>Cancelar</Button>
@@ -158,31 +161,31 @@ export default function Usuarios() {
           <div style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
             <Input
               placeholder="Nombre"
-              value={usuarioEditando.nombre}
+              value={usuarioEditando.NOMBRE}
               onInput={(e) =>
                 setUsuarioEditando({
                   ...usuarioEditando,
-                  nombre: ((e.target as unknown) as HTMLInputElement).value
+                  NOMBRE: ((e.target as unknown) as HTMLInputElement).value
                 })
               }
             />
             <Input
               placeholder="Correo"
-              value={usuarioEditando.correo}
+              value={usuarioEditando.EMAIL}
               onInput={(e) =>
                 setUsuarioEditando({
                   ...usuarioEditando,
-                  correo: ((e.target as unknown) as HTMLInputElement).value
+                  EMAIL: ((e.target as unknown) as HTMLInputElement).value
                 })
               }
             />
             <Input
               placeholder="Rol"
-              value={usuarioEditando.rol}
+              value={usuarioEditando.ROL}
               onInput={(e) =>
                 setUsuarioEditando({
                   ...usuarioEditando,
-                  rol: ((e.target as unknown) as HTMLInputElement).value
+                  ROL: ((e.target as unknown) as HTMLInputElement).value
                 })
               }
             />

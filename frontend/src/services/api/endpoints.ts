@@ -8,5 +8,12 @@ export const API_ENDPOINTS = {
   inventory: {
     all_inventory: '/inventario/with-details',
     update: '/inventario/update-inventario-producto'
+  },
+
+  // User endpoints
+  user: {
+    all_users: '/usuarios', // GET
+    create: '/usuarios', // POST
+    roles: '/usuarios/roles' // GET - Added roles endpoint
   }
 } as const;
