@@ -49,7 +49,7 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
     if (item) {
       setSelectedItem({
         ...item,
-        PRECIO_UNITARIO: item.PRECIO_UNITARIO || "0"
+        PRECIO_UNITARIO: item.PRECIO_UNITARIO || "0",
       });
     }
     setError(null);
@@ -61,7 +61,12 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
     try {
       setIsSaving(true);
       setError(null);
-      await onSave(selectedItem);
+      const itemToSave = {
+        ...selectedItem,
+        ID: selectedItem.ID,
+        PRODUCTO_ID: selectedItem.PRODUCTO_ID
+      };
+      await onSave(itemToSave);
       onClose();
     } catch (err) {
       setError('Error al guardar los cambios');

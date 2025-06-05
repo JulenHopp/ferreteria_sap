@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
@@ -9,10 +9,10 @@ import {
   Text
 } from "@ui5/webcomponents-react";
 import EditInventory from "../popups/EditInventory";
-import { InventoryService, InventoryItem } from "../../services/api/inventory.service";
+import { InventoryItem } from "../../services/api/inventory.service";
 
 const TABLE_COLUMNS = [
-  { Header: "ID", accessor: "ID" },
+  // { Header: "ID", accessor: "ID" },
   { Header: "Nombre del producto", accessor: "NOMBRE_PRODUCTO" },
   { Header: "Categoría", accessor: "CATEGORIA" },
   { Header: "Cantidad", accessor: "CANTIDAD" },
@@ -21,31 +21,17 @@ const TABLE_COLUMNS = [
   { Header: "Precio", accessor: "PRECIO_UNITARIO" }
 ];
 
-export default function Inventario() {
+interface InventoryTableProps {
+  data: InventoryItem[];
+  loading: boolean;
+  error: string | null;
+  onSave: (updatedItem: InventoryItem) => Promise<void>;
+}
+
+export default function InventoryTable({ data, loading, error, onSave }: InventoryTableProps) {
   const [filtro, setFiltro] = useState("");
   const [categoria, setCategoria] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [data, setData] = useState<InventoryItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchInventory = async () => {
-    try {
-      setLoading(true);
-      const inventoryData = await InventoryService.getAllInventory();
-      setData(inventoryData);
-      setError(null);
-    } catch (err) {
-      setError('Error al cargar el inventario');
-      console.error('Error fetching inventory:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchInventory();
-  }, []);
 
   const dataFiltrada = data.filter((item) => {
     const searchText = filtro.trim().toLowerCase();
@@ -55,15 +41,6 @@ export default function Inventario() {
     return (searchText === '' || itemName.includes(searchText)) &&
            (categoria === '' || itemCategory === categoria);
   });
-
-  const handleSaveChanges = async (updatedItem: InventoryItem) => {
-    try {
-      await InventoryService.updateInventory(updatedItem);
-      await fetchInventory(); // Fetch fresh data after successful update
-    } catch (error) {
-      console.error('Error updating inventory:', error);
-    }
-  };
 
   const uniqueCategories = [...new Set(data.map(item => item.CATEGORIA))];
 
@@ -102,7 +79,7 @@ export default function Inventario() {
         data={dataFiltrada}
         visibleRows={14}
         sortable={true}
-        scaleWidthMode="Grow"
+        scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
           width: "100%",
@@ -115,7 +92,7 @@ export default function Inventario() {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         data={data}
-        onSave={handleSaveChanges}
+        onSave={onSave}
       />
     </div>
   );

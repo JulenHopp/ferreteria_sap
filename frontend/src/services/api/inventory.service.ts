@@ -4,6 +4,7 @@ import { API_ENDPOINTS } from './endpoints';
 // Types
 export interface InventoryItem {
   ID: number;
+  PRODUCTO_ID: number;
   NOMBRE_PRODUCTO: string;
   CATEGORIA: string;
   CATEGORIA_ID: number;
@@ -40,7 +41,7 @@ export class InventoryService {
   static async updateInventory(item: InventoryItem): Promise<InventoryItem> {
     const updateData: UpdateInventoryRequest = {
       inventario_id: item.ID,
-      producto_id: item.ID,
+      producto_id: item.PRODUCTO_ID,
       nombre: item.NOMBRE_PRODUCTO,
       categoria_id: item.CATEGORIA_ID,
       cantidad: item.CANTIDAD,

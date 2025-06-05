@@ -36,6 +36,47 @@ const UsuarioModel = {
     });
   },
 
+  update: async ({ id, nombre, correo, contrasena, rol_id }) => {
+    let hashedPassword = null;
+
+    if (contrasena) {
+      hashedPassword = await bcrypt.hash(contrasena, 10);
+    }
+
+    return new Promise((resolve, reject) => {
+      const query = `
+        UPDATE Usuarios
+        SET nombre = ?, correo = ?, ${contrasena ? "contrasena = ?, " : ""} rol_id = ?
+        WHERE id = ?
+      `;
+
+      const params = contrasena
+        ? [nombre, correo, hashedPassword, rol_id, id]
+        : [nombre, correo, rol_id, id];
+
+      db.prepare(query, (err, statement) => {
+        if (err) return reject(err);
+        statement.exec(params, (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+    });
+  },
+
+  delete: async (id) => {
+    return new Promise((resolve, reject) => {
+      const query = `DELETE FROM Usuarios WHERE id = ?`;
+      db.prepare(query, (err, statement) => {
+        if (err) return reject(err);
+        statement.exec([id], (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+    });
+  },
+  
   getAllRoles: async () => {
     return new Promise((resolve, reject) => {
       db.exec("SELECT * FROM Roles", (err, result) => {
