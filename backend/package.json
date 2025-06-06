@@ -35,6 +35,14 @@
     "supertest": "^7.1.1"
   },
   "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["lcov", "text"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!**/*.test.{js,jsx}",
+      "!**/__tests__/**"
+    ],
     "reporters": [
       "default",
       "jest-junit"
