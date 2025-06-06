@@ -61,9 +61,6 @@ jobs:
 
   analyze-frontend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
         with:
@@ -71,15 +68,18 @@ jobs:
 
       - name: SonarQube Scan - Frontend
         uses: SonarSource/sonarqube-scan-action@v5
+        with:
+          args: >
+            -Dsonar.projectKey=Fantastic5_front
+            -Dsonar.projectName=Fantastic5_front
+            -Dsonar.sources=src
+            -Dsonar.projectBaseDir=frontend
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   analyze-backend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
     steps:
       - uses: actions/checkout@v4
         with:
@@ -87,6 +87,12 @@ jobs:
 
       - name: SonarQube Scan - Backend
         uses: SonarSource/sonarqube-scan-action@v5
+        with:
+          args: >
+            -Dsonar.projectKey=Fantastic5_back
+            -Dsonar.projectName=Fantastic5_back
+            -Dsonar.sources=src
+            -Dsonar.projectBaseDir=backend
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
