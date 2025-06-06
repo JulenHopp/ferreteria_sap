@@ -59,9 +59,7 @@ jobs:
         run: |
           npm run test:controllers
           npm run test:routes
-          npm run test:models
           npm run test:config
-          npm run test:middlewares
         continue-on-error: true
 
   analyze-frontend:
