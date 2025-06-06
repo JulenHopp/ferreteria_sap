@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "lint": "",
+    "lint": "eslint .",
     "test": ""
   },
   "author": "",
@@ -21,6 +21,9 @@
     "pg": "^8.16.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "nodemon": "^3.1.10",
+    "sonarqube-scanner": "^4.3.0"
   }
 }
