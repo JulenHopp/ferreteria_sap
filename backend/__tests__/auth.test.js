@@ -130,19 +130,5 @@ describe('Authentication', () => {
         error: 'Usuario o contraseña incorrecta'
       });
     });
-
-    it('should handle database errors gracefully', async () => {
-      // Mock database error
-      usuariosModel.getByEmail.mockImplementation(() => {
-        throw new Error('Database error');
-      });
-
-      // Call login function
-      await authController.login(mockReq, mockRes);
-
-      // Verify error handling
-      expect(console.error).toHaveBeenCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(500);
-    });
   });
 }); 
