@@ -19,7 +19,7 @@ jest.mock('@sap/hana-client', () => ({
 }));
 
 // Mock ordenesModel before importing
-jest.mock('../src/models/ordenesModel', () => ({
+jest.mock('../../src/models/ordenesModel', () => ({
   getAll: jest.fn(),
   getAllWithDetails: jest.fn(),
   getById: jest.fn(),
@@ -40,8 +40,8 @@ afterAll(() => {
   console.log = originalConsoleLog;
 });
 
-const ordenesModel = require('../src/models/ordenesModel');
-const ordenesController = require('../src/controllers/ordenesController');
+const ordenesModel = require('../../src/models/ordenesModel');
+const ordenesController = require('../../src/controllers/ordenesController');
 
 describe('Order Management', () => {
   let mockReq;

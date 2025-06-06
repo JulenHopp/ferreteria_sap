@@ -56,7 +56,12 @@ jobs:
         continue-on-error: true
 
       - name: Run Tests
-        run: npm test
+        run: |
+          npm run test:controllers
+          npm run test:routes
+          npm run test:models
+          npm run test:config
+          npm run test:middlewares
         continue-on-error: true
 
   analyze-frontend:
@@ -97,7 +102,12 @@ jobs:
         run: npm ci
 
       - name: Run Tests with Coverage
-        run: npm test
+        run: |
+          npm run test:controllers
+          npm run test:routes
+          npm run test:models
+          npm run test:config
+          npm run test:middlewares
 
       - name: SonarQube Scan - Backend
         uses: SonarSource/sonarqube-scan-action@v5
@@ -110,6 +120,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.coverage.exclusions=**/*.test.js,**/__tests__/**
             -Dsonar.test.inclusions=**/*.test.js
+            -Dsonar.testExecutionReportPaths=test-report.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

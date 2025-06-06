@@ -21,7 +21,7 @@ jest.mock('@sap/hana-client', () => ({
 jest.mock('bcrypt');
 
 // Mock usuariosModel before importing
-jest.mock('../src/models/usuariosModel', () => ({
+jest.mock('../../src/models/usuariosModel', () => ({
   getAll: jest.fn(),
   create: jest.fn(),
   update: jest.fn(),
@@ -40,8 +40,8 @@ afterAll(() => {
 });
 
 const bcrypt = require('bcrypt');
-const usuariosModel = require('../src/models/usuariosModel');
-const usuariosController = require('../src/controllers/usuariosController');
+const usuariosModel = require('../../src/models/usuariosModel');
+const usuariosController = require('../../src/controllers/usuariosController');
 
 describe('User Management', () => {
   let mockReq;

@@ -19,7 +19,7 @@ jest.mock('@sap/hana-client', () => ({
 }));
 
 // Mock proveedoresModel before importing
-jest.mock('../src/models/proveedoresModel', () => ({
+jest.mock('../../src/models/proveedoresModel', () => ({
   getAll: jest.fn(),
   getById: jest.fn(),
   create: jest.fn(),
@@ -37,8 +37,8 @@ afterAll(() => {
   console.log = originalConsoleLog;
 });
 
-const proveedoresModel = require('../src/models/proveedoresModel');
-const proveedoresController = require('../src/controllers/proveedoresController');
+const proveedoresModel = require('../../src/models/proveedoresModel');
+const proveedoresController = require('../../src/controllers/proveedoresController');
 
 describe('Supplier Management', () => {
   let mockReq;

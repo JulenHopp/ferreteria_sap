@@ -6,7 +6,12 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "lint": "eslint .",
-    "test": "jest --coverage"
+    "test": "jest --coverage --testPathPattern=__tests__/",
+    "test:controllers": "jest --coverage --testPathPattern=__tests__/controllers",
+    "test:routes": "jest --coverage --testPathPattern=__tests__/routes",
+    "test:models": "jest --coverage --testPathPattern=__tests__/models",
+    "test:config": "jest --coverage --testPathPattern=__tests__/config",
+    "test:middlewares": "jest --coverage --testPathPattern=__tests__/middlewares"
   },
   "author": "",
   "license": "ISC",

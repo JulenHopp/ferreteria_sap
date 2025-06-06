@@ -19,7 +19,7 @@ jest.mock('@sap/hana-client', () => ({
 }));
 
 // Mock inventarioModel before importing
-jest.mock('../src/models/inventarioModel', () => ({
+jest.mock('../../src/models/inventarioModel', () => ({
   getAll: jest.fn(),
   getAllWithDetails: jest.fn(),
   create: jest.fn(),
@@ -38,8 +38,8 @@ afterAll(() => {
   console.log = originalConsoleLog;
 });
 
-const inventarioModel = require('../src/models/inventarioModel');
-const inventarioController = require('../src/controllers/inventarioController');
+const inventarioModel = require('../../src/models/inventarioModel');
+const inventarioController = require('../../src/controllers/inventarioController');
 
 describe('Inventory Management', () => {
   let mockReq;

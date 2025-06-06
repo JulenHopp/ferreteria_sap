@@ -33,7 +33,7 @@ describe('Database Connection', () => {
     process.env.HANA_PASSWORD = 'test-password';
 
     // Import the module
-    require('../src/config/db');
+    require('../../src/config/db');
 
     // Verify successful connection
     expect(console.log).toHaveBeenCalledWith('Conexión a SAP HANA exitosa');
@@ -59,7 +59,7 @@ describe('Database Connection', () => {
     const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
 
     // Import the module
-    require('../src/config/db');
+    require('../../src/config/db');
 
     // Verify error handling
     expect(console.error).toHaveBeenCalledWith('Error conectando a SAP HANA:', mockError);

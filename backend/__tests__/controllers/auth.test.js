@@ -23,7 +23,7 @@ jest.mock('bcrypt');
 jest.mock('jsonwebtoken');
 
 // Mock usuariosModel before importing
-jest.mock('../src/models/usuariosModel', () => ({
+jest.mock('../../src/models/usuariosModel', () => ({
   getByEmail: jest.fn()
 }));
 
@@ -39,8 +39,8 @@ afterAll(() => {
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const usuariosModel = require('../src/models/usuariosModel');
-const authController = require('../src/controllers/authController');
+const usuariosModel = require('../../src/models/usuariosModel');
+const authController = require('../../src/controllers/authController');
 
 describe('Authentication', () => {
   let mockReq;

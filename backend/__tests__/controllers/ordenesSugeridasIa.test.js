@@ -19,7 +19,7 @@ jest.mock('@sap/hana-client', () => ({
 }));
 
 // Mock ordenesSugeridadIaModel before importing
-jest.mock('../src/models/ordenesSugeridasIaModel', () => ({
+jest.mock('../../src/models/ordenesSugeridasIaModel', () => ({
   getAll: jest.fn(),
   create: jest.fn()
 }));
@@ -34,8 +34,8 @@ afterAll(() => {
   console.log = originalConsoleLog;
 });
 
-const ordenesSugeridadIaModel = require('../src/models/ordenesSugeridasIaModel');
-const ordenesSugeridadIaController = require('../src/controllers/ordenesSugeridasIaController');
+const ordenesSugeridadIaModel = require('../../src/models/ordenesSugeridasIaModel');
+const ordenesSugeridadIaController = require('../../src/controllers/ordenesSugeridasIaController');
 
 describe('AI Order Suggestions Management', () => {
   let mockReq;
