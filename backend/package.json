@@ -11,6 +11,7 @@
     "test:routes": "jest --coverage --testPathPattern=__tests__/routes",
     "test:models": "jest --coverage --testPathPattern=__tests__/models",
     "test:config": "jest --coverage --testPathPattern=__tests__/config",
+    "test:utils": "jest --coverage --testPathPattern=__tests__/middlewares",
     "test:middlewares": "jest --coverage --testPathPattern=__tests__/middlewares"
   },
   "author": "",
