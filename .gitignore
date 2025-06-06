@@ -2,4 +2,3 @@
 .DS_STORE
 *.env
 *node_modules
-*sonar-project.properties
