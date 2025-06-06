@@ -36,12 +36,14 @@
   },
   "jest": {
     "collectCoverage": true,
-    "coverageDirectory": "coverage",
-    "coverageReporters": ["lcov", "text"],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!**/*.test.{js,jsx}",
-      "!**/__tests__/**"
+      "**/controllers/**/*.js",
+      "**/routes/**/*.js",
+      "**/models/**/*.js",
+      "**/middlewares/**/*.js",
+      "**/utils/**/*.js",
+      "!**/node_modules/**",
+      "!**/tests/**"
     ],
     "reporters": [
       "default",
@@ -49,7 +51,7 @@
     ]
   },
   "jest-junit": {
-    "outputDirectory": "./backend",
+    "outputDirectory": "./",
     "outputName": "test-report.xml"
   }
 }
