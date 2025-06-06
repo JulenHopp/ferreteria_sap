@@ -116,7 +116,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.coverage.exclusions=**/*.test.js,**/__tests__/**
             -Dsonar.test.inclusions=**/*.test.js
-            -Dsonar.testExecutionReportPaths=test-report.xml
+            -Dsonar.junit.reportPaths=test-report.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
