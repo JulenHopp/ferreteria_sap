@@ -93,6 +93,8 @@ jobs:
             -Dsonar.projectName=Fantastic5_back
             -Dsonar.sources=src
             -Dsonar.projectBaseDir=backend
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.coverage.exclusions=**/*.test.js,**/__tests__/**
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

@@ -11,6 +11,11 @@ app.use(cors({
     credentials: true
 }));
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 const ordenesRoutes = require("./src/routes/ordenesRoutes");
 const usuarioRoutes = require("./src/routes/usuariosRoutes");
 const proveedorRoutes = require("./src/routes/proveedoresRoutes");
