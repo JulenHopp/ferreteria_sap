@@ -1,6 +1,4 @@
 import {
-  Dialog,
-  Title,
   Button,
   Input,
   ComboBox,
@@ -8,14 +6,11 @@ import {
   Form,
   FormItem,
   Label,
-  Bar,
   BusyIndicator,
-  MessageBox,
-  Select,
-  Option,
 } from "@ui5/webcomponents-react";
 import { useState } from "react";
 import { InventoryItem } from "../../services/api/inventory.service";
+import TemplatePopup from "./TemplatePopup";
 
 interface EditInventoryProps {
   isOpen: boolean;
@@ -90,29 +85,29 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
     }
   };
 
-  return (
-    <Dialog
-      open={isOpen}
-      header={
-        <Bar>
-          <Title>Editar Inventario</Title>
-          <Button icon="decline" design="Transparent" onClick={onClose}/>
-        </Bar>
-      }
-      onClose={onClose}
-      style={{ width: "45%" }}
-    >
-      <Form style={{ padding: "0.5rem" }}>
-        {error && (
-          <MessageBox
-            type="Error"
-            actions={["OK"]}
-            onClose={() => setError(null)}
-          >
-            {error}
-          </MessageBox>
-        )}
+  const footer = (
+    <>
+      <Button onClick={onClose}>Cancelar</Button>
+      <Button
+        onClick={handleSaveChanges}
+        design="Emphasized"
+        disabled={!selectedItem || isSaving}
+      >
+        {isSaving ? <BusyIndicator size="S" /> : "Guardar Cambios"}
+      </Button>
+    </>
+  );
 
+  return (
+    <TemplatePopup
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Editar Inventario"
+      error={error}
+      onErrorClose={() => setError(null)}
+      footer={footer}
+    >
+      <Form>
         <FormItem>
           <Label>Producto</Label>
           <ComboBox
@@ -140,15 +135,15 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
 
         <FormItem>
           <Label>Categoría</Label>
-          <Select
+          <ComboBox
             value={selectedItem?.CATEGORIA || ""}
             onChange={handleCategoryChange}
           >
-            <Option value="">Seleccionar categoría</Option>
+            <ComboBoxItem text="Seleccionar categoría" />
             {uniqueCategories.map((cat) => (
-              <Option key={cat} value={cat}>{cat}</Option>
+              <ComboBoxItem key={cat} text={cat} />
             ))}
-          </Select>
+          </ComboBox>
         </FormItem>
 
         <FormItem>
@@ -184,17 +179,7 @@ export default function EditInventory({ isOpen, onClose, data, onSave }: EditInv
             onInput={(e) => handleInputChange('PRECIO_UNITARIO', (e.target as unknown as HTMLInputElement).value)}
           />
         </FormItem>
-
-        <FormItem>
-          <Button
-            onClick={handleSaveChanges}
-            design="Emphasized"
-            disabled={!selectedItem || isSaving}
-          >
-            {isSaving ? <BusyIndicator size="S" /> : "Guardar Cambios"}
-          </Button>
-        </FormItem>
       </Form>
-    </Dialog>
+    </TemplatePopup>
   );
 }

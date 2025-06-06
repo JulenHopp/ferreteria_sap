@@ -19,19 +19,18 @@ export default function MainPage() {
     const { rol_id } = useAuth();
     const menuItems: NavItem[] = navPermissions[rol_id] || [];
     
-    // Initialize state from session storage or default to dashboard
     const [selectedKey, setSelectedKey] = useState(() => {
         const saved = sessionStorage.getItem(STORAGE_KEY);
-        // Validate that the saved key exists in the current user's permissions
-        if (saved && (saved === 'dashboard' || menuItems.some(item => item.key === saved))) {
+        if (saved && menuItems.some(item => item.key === saved)) {
             return saved;
         }
-        return 'dashboard';
+        return menuItems[0]?.key || '';
     });
 
-    // Update session storage when selectedKey changes
     useEffect(() => {
-        sessionStorage.setItem(STORAGE_KEY, selectedKey);
+        if (selectedKey) {
+            sessionStorage.setItem(STORAGE_KEY, selectedKey);
+        }
     }, [selectedKey]);
 
     const contentMap: Record<string, ReactNode> = {
@@ -43,9 +42,15 @@ export default function MainPage() {
     };
 
     const handleSelectionChange = (e: any) => {
-        const newKey = e.detail.item.dataset.key ?? menuItems[0]?.key ?? "dashboard";
-        setSelectedKey(newKey);
+        const newKey = e.detail.item.dataset.key;
+        if (newKey && menuItems.some(item => item.key === newKey)) {
+            setSelectedKey(newKey);
+        }
     };
+
+    if (!menuItems.length) {
+        return <div>No hay opciones disponibles para tu rol</div>;
+    }
 
     return (
         <NavLayout
@@ -53,13 +58,6 @@ export default function MainPage() {
                 <SideNavigation
                     onSelectionChange={handleSelectionChange}
                 >
-                    <SideNavigationItem
-                        key="dashboard"
-                        text="Dashboard"
-                        icon="home"
-                        selected={selectedKey === "dashboard"}
-                        data-key="dashboard"
-                    />
                     {menuItems.map((item: NavItem) => (
                         <SideNavigationItem
                             key={item.key}
@@ -72,7 +70,7 @@ export default function MainPage() {
                 </SideNavigation>
             }
         >
-            {contentMap[selectedKey] || <div>Selecciona una opción del menú</div>}
+            {selectedKey && contentMap[selectedKey] || <div>Selecciona una opción del menú</div>}
         </NavLayout>
     );
 }

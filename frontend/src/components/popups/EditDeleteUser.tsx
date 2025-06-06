@@ -1,20 +1,17 @@
 import {
-  Dialog,
-  Title,
   Button,
   Form,
   FormItem,
   Label,
   Input,
-  Bar,
   BusyIndicator,
-  MessageBox,
   ComboBox,
   ComboBoxItem,
   Text
 } from '@ui5/webcomponents-react';
 import { useState, useEffect } from 'react';
 import { UserService, User, UpdateUserRequest, Role } from '../../services/api/user.service';
+import TemplatePopup from './TemplatePopup';
 
 interface EditDeleteUserProps {
   isOpen: boolean;
@@ -23,18 +20,6 @@ interface EditDeleteUserProps {
   onSave: (userId: number, updateData: UpdateUserRequest) => Promise<void>;
   onDelete: (userId: number) => Promise<void>;
 }
-
-const STYLES = {
-  dialog: {
-    width: '45%'
-  },
-  form: {
-    padding: '0.5rem'
-  },
-  messageBox: {
-      marginBottom: '1rem'
-  }
-} as const;
 
 export default function EditDeleteUser({ isOpen, onClose, user, onSave, onDelete }: EditDeleteUserProps) {
   const [editedUser, setEditedUser] = useState<User | null>(user);
@@ -71,35 +56,34 @@ export default function EditDeleteUser({ isOpen, onClose, user, onSave, onDelete
       setRoles([]);
       setRolesError(null);
     }
-
   }, [isOpen]);
 
   const handleInputChange = (field: keyof User, value: string) => {
     setEditedUser(prev => prev ? { ...prev, [field]: value } : null);
   };
 
-   const handleRoleChange = (e: any) => {
-      const selectedItem = e.detail.item; 
-      if(selectedItem && editedUser) {
-        const selectedRoleId = parseInt(selectedItem.getAttribute('data-id'), 10); 
-        setEditedUser(prev => prev ? { ...prev, ROL_ID: selectedRoleId } : null);
-      } else if (editedUser) {
-          setEditedUser(prev => prev ? { ...prev, ROL_ID: undefined } as any : null);
-      }
+  const handleRoleChange = (e: any) => {
+    const selectedItem = e.detail.item; 
+    if(selectedItem && editedUser) {
+      const selectedRoleId = parseInt(selectedItem.getAttribute('data-id'), 10); 
+      setEditedUser(prev => prev ? { ...prev, ROL_ID: selectedRoleId } : null);
+    } else if (editedUser) {
+      setEditedUser(prev => prev ? { ...prev, ROL_ID: undefined } as any : null);
+    }
   };
 
   const handleSaveChanges = async () => {
     if (!editedUser || editedUser.USUARIO_ID === undefined) return;
 
     const updateData: UpdateUserRequest = {
-        nombre: editedUser.NOMBRE,
-        correo: editedUser.EMAIL,
-        rol_id: editedUser.ROL_ID
+      nombre: editedUser.NOMBRE,
+      correo: editedUser.EMAIL,
+      rol_id: editedUser.ROL_ID
     };
 
     if (!updateData.nombre || !updateData.correo || updateData.rol_id === undefined) {
-         setError('Por favor, complete todos los campos obligatorios.');
-         return;
+      setError('Por favor, complete todos los campos obligatorios.');
+      return;
     }
     
     try {
@@ -131,84 +115,68 @@ export default function EditDeleteUser({ isOpen, onClose, user, onSave, onDelete
 
   const isSaveButtonDisabled = !editedUser || isSaving || isDeleting || rolesLoading || !editedUser.NOMBRE || !editedUser.EMAIL || editedUser.ROL_ID === undefined;
   const isDeleteButtonDisabled = !user || isSaving || isDeleting || rolesLoading;
-
   const selectedRoleName = roles.find(role => role.ID === editedUser?.ROL_ID)?.NOMBRE || '';
 
+  const footer = (
+    <>
+      <Button onClick={onClose}>Cancelar</Button>
+      <Button onClick={handleDeleteUser} design="Negative" disabled={isDeleteButtonDisabled}>
+        {isDeleting ? <BusyIndicator size="S" /> : "Eliminar"}
+      </Button>
+      <Button onClick={handleSaveChanges} design="Emphasized" disabled={isSaveButtonDisabled}>
+        {isSaving ? <BusyIndicator size="S" /> : "Guardar Cambios"}
+      </Button>
+    </>
+  );
+
   return (
-    <Dialog
-      open={isOpen}
-      header={
-        <Bar>
-          <Title>{user ? `Editar Usuario: ${user.NOMBRE}` : "Editar Usuario"}</Title>
-          <Button icon="decline" design="Transparent" onClick={onClose}/>
-        </Bar>
-      }
+    <TemplatePopup
+      isOpen={isOpen}
       onClose={onClose}
-      style={STYLES.dialog}
-      footer={
-        <>
-          <Button onClick={onClose}>Cancelar</Button>
-          <Button onClick={handleDeleteUser} design="Negative" disabled={isDeleteButtonDisabled}>
-             {isDeleting ? <BusyIndicator size="S" /> : "Eliminar"}
-          </Button>
-          <Button onClick={handleSaveChanges} design="Emphasized" disabled={isSaveButtonDisabled}>
-            {isSaving ? <BusyIndicator size="S" /> : "Guardar Cambios"}
-          </Button>
-        </>
-      }
+      title={user ? `Editar Usuario: ${user.NOMBRE}` : "Editar Usuario"}
+      error={error || rolesError}
+      onErrorClose={() => { setError(null); setRolesError(null); }}
+      isLoading={rolesLoading}
+      footer={footer}
     >
-       <div style={STYLES.form}>
-        {(error || rolesError) && (
-          <MessageBox
-            type="Error"
-            actions={["OK"]}
-            onClose={() => { setError(null); setRolesError(null); }}
-            style={STYLES.messageBox}
-          >
-            {error || rolesError}
-          </MessageBox>
-        )}
-         {rolesLoading ? (
-            <BusyIndicator active={rolesLoading} size="M" style={{ margin: "2rem auto", display: "block" }} />
-        ) : !editedUser ? (
-             <Text>Seleccione un usuario para editar.</Text>
-        ) : (
-            <Form layout="ColumnLayout">
-               <FormItem >
-                <Label>Nombre</Label>
-                <Input
-                  placeholder="Nombre completo"
-                  value={editedUser.NOMBRE}
-                  onInput={(e) => handleInputChange('NOMBRE', (e.target as unknown as HTMLInputElement).value)}
-                  disabled={isSaving || isDeleting}
-                />
-              </FormItem>
-              <FormItem >
-                 <Label>Correo</Label>
-                <Input
-                  type="Email"
-                  placeholder="Correo electrónico"
-                  value={editedUser.EMAIL}
-                  onInput={(e) => handleInputChange('EMAIL', (e.target as unknown as HTMLInputElement).value)}
-                  disabled={isSaving || isDeleting}
-                />
-              </FormItem>
-               <FormItem >
-                 <Label>Rol</Label>
-                 <ComboBox
-                    placeholder="Seleccionar rol"
-                    value={selectedRoleName}
-                    onSelectionChange={handleRoleChange}
-                    disabled={isSaving || isDeleting || rolesLoading}
-                 >
-                    {roles.map(role => (
-                         <ComboBoxItem key={role.ID} text={role.NOMBRE} data-id={role.ID} /> 
-                    ))}
-                 </ComboBox>
-              </FormItem>
-            </Form>
-        )}
-      </div>
-    </Dialog>
+      {!editedUser ? (
+        <Text>Seleccione un usuario para editar.</Text>
+      ) : (
+        <Form layout="ColumnLayout">
+          <FormItem>
+            <Label>Nombre</Label>
+            <Input
+              placeholder="Nombre completo"
+              value={editedUser.NOMBRE}
+              onInput={(e) => handleInputChange('NOMBRE', (e.target as unknown as HTMLInputElement).value)}
+              disabled={isSaving || isDeleting}
+            />
+          </FormItem>
+          <FormItem>
+            <Label>Correo</Label>
+            <Input
+              type="Email"
+              placeholder="Correo electrónico"
+              value={editedUser.EMAIL}
+              onInput={(e) => handleInputChange('EMAIL', (e.target as unknown as HTMLInputElement).value)}
+              disabled={isSaving || isDeleting}
+            />
+          </FormItem>
+          <FormItem>
+            <Label>Rol</Label>
+            <ComboBox
+              placeholder="Seleccionar rol"
+              value={selectedRoleName}
+              onSelectionChange={handleRoleChange}
+              disabled={isSaving || isDeleting || rolesLoading}
+            >
+              {roles.map(role => (
+                <ComboBoxItem key={role.ID} text={role.NOMBRE} data-id={role.ID} /> 
+              ))}
+            </ComboBox>
+          </FormItem>
+        </Form>
+      )}
+    </TemplatePopup>
   );
 } 

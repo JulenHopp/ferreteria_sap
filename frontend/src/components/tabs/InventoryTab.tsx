@@ -38,7 +38,7 @@ export default function InventoryTab() {
   return (
     <div style={{ 
       display: 'flex', 
-      gap: '1rem', 
+      gap: '1.5rem', 
       height: '100%',
       width: '100%'
     }}>

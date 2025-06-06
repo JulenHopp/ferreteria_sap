@@ -31,7 +31,7 @@ export default function InventoryAnalytics({ data }: InventoryAnalyticsProps) {
   }));
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
       <div style={{ display: 'flex', gap: '1rem' }}>
         <MetricCard
           label="Valor Total"

@@ -58,7 +58,7 @@ export default function NavLayout({ children, sideContent }: NavLayoutProps) {
                 justifyContent='Center'
                 style={{
                     flex: 1,
-                    padding: '2rem',
+                    padding: '1.5rem',
                     boxSizing: 'border-box',
                     overflow: 'auto',
                 }}
