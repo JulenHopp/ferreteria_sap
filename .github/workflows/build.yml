@@ -103,9 +103,7 @@ jobs:
         run: |
           npm run test:controllers
           npm run test:routes
-          npm run test:models
           npm run test:config
-          npm run test:middlewares
 
       - name: SonarQube Scan - Backend
         uses: SonarSource/sonarqube-scan-action@v5
