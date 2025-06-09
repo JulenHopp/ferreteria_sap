@@ -20,6 +20,8 @@ const ordenesSugeridadIaRoutes = require("./src/routes/ordenesSugeridasIaRoutes"
 const inventarioRoutes = require("./src/routes/inventarioRoutes");
 const ventasRoutes = require("./src/routes/ventasRoutes");
 const authRoutes = require("./src/routes/authRoutes");
+const predictRoutes = require("./routes/predict");
+
 
 app.use(express.json());
 
@@ -31,6 +33,7 @@ app.use("/api/ordenes-sugeridad-ia", ordenesSugeridadIaRoutes);
 app.use("/api/inventario", inventarioRoutes);
 app.use("/api/ventas", ventasRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api", predictRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,5 +1,6 @@
 node_modules/
 .env
 dist/
-coverage
-test-report.xml
+ai/venv/
+venv/
+
