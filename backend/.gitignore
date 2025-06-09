@@ -3,4 +3,5 @@ node_modules/
 dist/
 ai/venv/
 venv/
-
+coverage/
+test-report.xml
