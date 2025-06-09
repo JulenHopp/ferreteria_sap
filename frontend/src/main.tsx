@@ -9,7 +9,7 @@ import App from './App.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
-      <BrowserRouter basename="/ferreteria_sap">
+      <BrowserRouter>
         <AuthProvider>
           <App />
         </AuthProvider>
