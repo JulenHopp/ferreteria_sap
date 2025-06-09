@@ -17,5 +17,11 @@ export const API_ENDPOINTS = {
     roles: '/api/usuarios/roles', // GET
     update: (userId: number) => `/api/usuarios/${userId}`, // PUT
     delete: (userId: number) => `/api/usuarios/${userId}` // DELETE - Dynamic endpoint for delete
+  },
+
+  // Order endpoints
+  order: {
+    all_orders: '/api/ordenes/with-details',
+    update_status: (orderId: number) => `/api/ordenes/${orderId}/estado` // PATCH
   }
 } as const;

@@ -8,11 +8,11 @@ import {
   BusyIndicator,
   Text
 } from "@ui5/webcomponents-react";
-import EditInventory from "../popups/EditInventory";
+import EditInventory from "../popups/inventory/EditInventory";
 import { InventoryItem } from "../../services/api/inventory.service";
 
 const TABLE_COLUMNS = [
-  { Header: "Nombre del producto", accessor: "NOMBRE_PRODUCTO" },
+  { Header: "Producto", accessor: "NOMBRE_PRODUCTO" },
   { Header: "Categoría", accessor: "CATEGORIA" },
   { Header: "Cantidad", accessor: "CANTIDAD" },
   { Header: "Descripción", accessor: "DESCRIPCION" },

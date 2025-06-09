@@ -9,8 +9,8 @@ import {
   BusyIndicator,
 } from "@ui5/webcomponents-react";
 import { useState } from "react";
-import { InventoryItem } from "../../services/api/inventory.service";
-import TemplatePopup from "./TemplatePopup";
+import { InventoryItem } from "../../../services/api/inventory.service";
+import TemplatePopup from "../TemplatePopup";
 
 interface EditInventoryProps {
   isOpen: boolean;

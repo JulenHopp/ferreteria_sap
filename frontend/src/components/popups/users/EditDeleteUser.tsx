@@ -10,8 +10,8 @@ import {
   Text
 } from '@ui5/webcomponents-react';
 import { useState, useEffect } from 'react';
-import { UserService, User, UpdateUserRequest, Role } from '../../services/api/user.service';
-import TemplatePopup from './TemplatePopup';
+import { UserService, User, UpdateUserRequest, Role } from '../../../services/api/user.service';
+import TemplatePopup from '../TemplatePopup';
 
 interface EditDeleteUserProps {
   isOpen: boolean;

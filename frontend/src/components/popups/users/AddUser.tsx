@@ -9,8 +9,8 @@ import {
   ComboBoxItem
 } from '@ui5/webcomponents-react';
 import { useState, useEffect } from 'react';
-import { UserService, CreateUserRequest, Role } from '../../services/api/user.service';
-import TemplatePopup from './TemplatePopup';
+import { UserService, CreateUserRequest, Role } from '../../../services/api/user.service';
+import TemplatePopup from '../TemplatePopup';
 
 interface AddUserProps {
   isOpen: boolean;
