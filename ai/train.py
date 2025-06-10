@@ -11,7 +11,7 @@ from models.model import build_model
 current_dir = Path(__file__).parent
 
 # Cargar datos
-df = pd.read_csv(current_dir / "data" / "data.csv")
+df = pd.read_csv(current_dir / "data" / "dataset_final.csv")
 
 # Eliminar columnas que no aportan al modelo
 df = df.drop(columns=["PRODUCTO", "PRODUCTO_ID", "PROVEEDOR_SUGERIDO"])
