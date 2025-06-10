@@ -9,7 +9,7 @@ import InventoryTab from '../components/tabs/InventoryTab';
 import OrdersTab from '../components/tabs/OrdersTab';
 import UsersTab from '../components/tabs/UsersTab';
 import AiPage from './AiPage';
-import DashboardTable from '../components/tables/DashboardTable';
+import DashboardTab from '../components/tabs/DashboardTab';
 import { navPermissions, NavItem } from "../auth/navPermissions";
 import { useAuth } from '../auth/AuthContext';
 
@@ -34,7 +34,7 @@ export default function MainPage() {
     }, [selectedKey]);
 
     const contentMap: Record<string, ReactNode> = {
-        dashboard: <DashboardTable />,
+        dashboard: <DashboardTab />,
         inventory: <InventoryTab />,
         orders: <OrdersTab />,
         users: <UsersTab />,
