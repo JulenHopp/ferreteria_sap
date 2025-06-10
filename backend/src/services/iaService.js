@@ -26,8 +26,6 @@ const iaService = {
         descripcion: item.DESCRIPCION
       }));
 
-      //console.log(datosModelo);
-
       // 3. Enviar al endpoint de predicción
       const response  = await axios.post('http://localhost:8000/predict', datosModelo);
       const predicciones = await response.data;
@@ -36,7 +34,7 @@ const iaService = {
       const resultados = [];
 
       for (const pred of predicciones) {
-        if (pred.prediction === 1) {
+        if (pred.prediction === 1 && pred.cantidad_sugerida > 0) {
           await ordenesSugeridadIaModel.create({
             producto_id: pred.producto_id,
             cantidad_sugerida: pred.cantidad_sugerida,
