@@ -1,81 +1,76 @@
-// frontend/src/pages/Pedidos.jsx
 import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
   Select,
   Option,
+  BusyIndicator,
+  Text
 } from "@ui5/webcomponents-react";
+import { Order } from "../../services/api/order.service";
 
-export default function Pedidos() {
+interface OrdersTableProps {
+  data: Order[];
+  loading: boolean;
+  error: string | null;
+  onStatusChange: (orderId: number, newStatus: string) => Promise<void>;
+}
+
+export default function OrdersTable({ data, loading, error, onStatusChange }: OrdersTableProps) {
   const [filtro, setFiltro] = useState("");
   const [estatus, setEstatus] = useState("");
 
-  interface Pedido {
-    numero: number;
-    proveedor: string;
-    producto: string;
-    estatus: string;
-  }
-
-  const handleEstatusChange = (numero: number, newEstatus: string): void => {
-    const updatedData: Pedido[] = data.map((item) =>
-      item.numero === numero ? { ...item, estatus: newEstatus } : item
-    );
-    // Aquí puedes actualizar el estado o manejar la lógica para guardar los cambios
-    console.log("Datos actualizados:", updatedData);
-  };
-
   const columns = [
-    { Header: "Número de pedido", accessor: "numero" },
-    { Header: "Proveedor", accessor: "proveedor" },
-    { Header: "Nombre producto", accessor: "producto" },
+    { Header: "Proveedor", accessor: "PROVEEDOR" },
+    { Header: "Producto", accessor: "NOMBRE_PRODUCTO" },
+    { Header: "Cantidad", accessor: "CANTIDAD" },
+    { Header: "Precio Unitario", accessor: "PRECIO_UNITARIO" },
+    { Header: "Costo Total", accessor: "COSTO_TOTAL" },
+    { Header: "Usuario", accessor: "NOMBRE_USUARIO" },
     {
-      Header: "Estatus pedido",
-      accessor: "estatus",
-      Cell: ({ row }: { row: { original: Pedido } }) => (
+      Header: "Estado",
+      accessor: "ESTADOS",
+      Cell: ({ row }: { row: { original: Order } }) => (
         <Select
-          value={row.original.estatus}
+          value={row.original.ESTADOS}
           onChange={(e) =>
-            handleEstatusChange(row.original.numero, e.detail.selectedOption.value || "")
+            onStatusChange(row.original.ID, e.detail.selectedOption.value || "")
           }
           style={{ width: "150px" }}
         >
-          <Option value="En curso">En curso</Option>
-          <Option value="En revisión">En revisión</Option>
-          <Option value="Pendiente pago">Pendiente pago</Option>
+          <Option value="Aprobada">Aprobada</Option>
+          <Option value="En Curso">En Curso</Option>
+          <Option value="Finalizada">Finalizada</Option>
         </Select>
       ),
     },
-  ];
-
-  const data = [
-    { numero: 1, proveedor: "Trupper", producto: "Martillo", estatus: "En curso" },
-    { numero: 2, proveedor: "Trupper", producto: "Clavos", estatus: "En curso" },
-    { numero: 3, proveedor: "Trupper", producto: "Llave inglesa", estatus: "En curso" },
-    { numero: 4, proveedor: "Trupper", producto: "Destornillador", estatus: "En curso" },
-    { numero: 5, proveedor: "Trupper", producto: "Sierra manual", estatus: "En curso" },
-    { numero: 6, proveedor: "Trupper", producto: "Taladro electrico", estatus: "En curso" },
-    { numero: 7, proveedor: "Trupper", producto: "Cinta metrica", estatus: "En curso" },
-    { numero: 8, proveedor: "Trupper", producto: "Tenazas", estatus: "En curso" },
-    { numero: 9, proveedor: "Trupper", producto: "Linterna", estatus: "En curso" },
-    { numero: 10, proveedor: "Trupper", producto: "Cinta metrica", estatus: "En curso" },
-    { numero: 11, proveedor: "Trupper", producto: "Tenazas", estatus: "En curso" },
-    { numero: 12, proveedor: "Trupper", producto: "Linterna", estatus: "En curso" },
-    { numero: 13, proveedor: "Trupper", producto: "Cinta metrica", estatus: "En revisión" },
-    { numero: 14, proveedor: "Trupper", producto: "Tenazas", estatus: "Pendiente pago" },
-    { numero: 15, proveedor: "Trupper", producto: "Linterna", estatus: "En curso" },
+    {
+      Header: "Fecha Creación",
+      accessor: "CREADO_EN",
+      Cell: ({ value }: { value: string }) => {
+        if (!value) return "";
+        const dotIndex = value.indexOf('.');
+        return dotIndex !== -1 ? value.substring(0, dotIndex) : value;
+      }
+    }
   ];
 
   const dataFiltrada = data.filter(
     (item) =>
-      item.producto.toLowerCase().includes(filtro.toLowerCase()) &&
-      (estatus ? item.estatus === estatus : true)
+      item.NOMBRE_PRODUCTO.toLowerCase().includes(filtro.toLowerCase()) &&
+      (estatus ? item.ESTADOS === estatus : true)
   );
 
-  return (
-    <div style={{ width: "100%"}}>
+  if (loading) {
+    return <BusyIndicator active={loading} size="L" style={{ margin: "10rem auto", display: "block" }} />;
+  }
 
+  if (error) {
+    return <Text style={{ color: "red" }}>{error}</Text>;
+  }
+
+  return (
+    <div style={{ width: "100%" }}>
       {/* Filtros */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>
         <Input
@@ -88,10 +83,10 @@ export default function Pedidos() {
           onChange={(e) => setEstatus(e.detail.selectedOption.value || "")}
           style={{ width: "200px" }}
         >
-          <Option value="">Todos los estatus</Option>
-          <Option value="En curso">En curso</Option>
-          <Option value="En revisión">En revisión</Option>
-          <Option value="Pendiente pago">Pendiente pago</Option>
+          <Option value="">Todos los estados</Option>
+          <Option value="Aprobada">Aprobada</Option>
+          <Option value="En Curso">En Curso</Option>
+          <Option value="Finalizada">Finalizada</Option>
         </Select>
       </div>
 
@@ -99,8 +94,8 @@ export default function Pedidos() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
-        visibleRows={14}
-        scaleWidthMode="Smart"
+        visibleRows={10}
+        scaleWidthMode="Grow"
         noDataText="No hay datos disponibles"
         style={{
           width: "100%",

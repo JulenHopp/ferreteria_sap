@@ -58,6 +58,11 @@ class ApiClient {
     return responseData;
   }
 
+  async patch<T>(url: string, data?: any) {
+    const { data: responseData } = await this.client.patch<T>(url, data);
+    return responseData;
+  }
+
   async delete<T>(url: string) {
     const { data } = await this.client.delete<T>(url);
     return data;

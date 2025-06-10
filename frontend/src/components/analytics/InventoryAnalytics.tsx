@@ -59,11 +59,8 @@ export default function InventoryAnalytics({ data }: InventoryAnalyticsProps) {
           dimension={{ accessor: 'category' }}
           measure={{
             accessor: 'count',
-            formatter: (value) => `${value.toLocaleString()} unidades`
           }}
-          chartConfig={{
-            margin: { top: 10, right: 20, bottom: 50, left: 10 }
-          }}
+          noLegend= {true}
         />
       </Card>
     </div>

@@ -6,8 +6,8 @@ import {
 import "@ui5/webcomponents-icons/dist/home.js";
 import NavLayout from '../components/nav/NavLayout';
 import InventoryTab from '../components/tabs/InventoryTab';
-import OrdersTable from '../components/tables/OrdersTable';
-import UsersTable from '../components/tables/UsersTable';
+import OrdersTab from '../components/tabs/OrdersTab';
+import UsersTab from '../components/tabs/UsersTab';
 import AiPage from './AiPage';
 import DashboardTable from '../components/tables/DashboardTable';
 import { navPermissions, NavItem } from "../auth/navPermissions";
@@ -36,8 +36,8 @@ export default function MainPage() {
     const contentMap: Record<string, ReactNode> = {
         dashboard: <DashboardTable />,
         inventory: <InventoryTab />,
-        orders: <OrdersTable />,
-        users: <UsersTable />,
+        orders: <OrdersTab />,
+        users: <UsersTab />,
         ai: <AiPage />
     };
 

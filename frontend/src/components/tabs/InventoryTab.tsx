@@ -50,7 +50,7 @@ export default function InventoryTab() {
           onSave={handleSaveChanges}
         />
       </div>
-      <div style={{ flex: '1 1 30%', minWidth: 0, maxWidth: '400px' }}>
+      <div style={{ flex: '1 1 30%', minWidth: 0, maxWidth: '350px' }}>
         <InventoryAnalytics data={data} />
       </div>
     </div>

@@ -1,8 +1,5 @@
 .vscode/
 .DS_STORE
 *.env
-<<<<<<< HEAD
 *node_modules
-=======
 *.pkl
->>>>>>> b1d0929a (feat: integrar carpeta AI con modelo, scripts de entrenamiento y predicción + ajustes backend)

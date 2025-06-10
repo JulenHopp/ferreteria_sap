@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   AnalyticalTable,
   Input,
@@ -6,38 +6,24 @@ import {
   BusyIndicator,
   Text
 } from "@ui5/webcomponents-react";
-import { UserService, User, CreateUserRequest, UpdateUserRequest } from "../../services/api/user.service";
-import AddUser from "../popups/AddUser";
-import EditDeleteUser from "../popups/EditDeleteUser";
+import { User, CreateUserRequest, UpdateUserRequest } from "../../services/api/user.service";
+import AddUser from "../popups/users/AddUser";
+import EditDeleteUser from "../popups/users/EditDeleteUser";
 
-export default function Usuarios() {
+interface UsersTableProps {
+  data: User[];
+  loading: boolean;
+  error: string | null;
+  onAdd: (newUser: CreateUserRequest) => Promise<void>;
+  onSave: (userId: number, updateData: UpdateUserRequest) => Promise<void>;
+  onDelete: (userId: number) => Promise<void>;
+}
+
+export default function UsersTable({ data, loading, error, onAdd, onSave, onDelete }: UsersTableProps) {
   const [filtro, setFiltro] = useState("");
-  const [data, setData] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
   const [dialogAgregarOpen, setDialogAgregarOpen] = useState(false);
-
   const [usuarioEditando, setUsuarioEditando] = useState<User | null>(null);
   const [dialogEditarOpen, setDialogEditarOpen] = useState(false);
-
-  const fetchUsers = async () => {
-    try {
-      setLoading(true);
-      const usersData = await UserService.getAllUsers();
-      setData(usersData);
-      setError(null);
-    } catch (err) {
-      setError("Error al cargar los usuarios");
-      console.error("Error fetching users:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const handleAgregar = () => {
     setDialogAgregarOpen(true);
@@ -45,12 +31,10 @@ export default function Usuarios() {
 
   const handleUserAdded = async (newUser: CreateUserRequest) => {
     try {
-      await UserService.createUser(newUser);
-      await fetchUsers();
+      await onAdd(newUser);
       setDialogAgregarOpen(false);
     } catch (err) {
       console.error("Error adding user:", err);
-      setError("Error al agregar usuario");
       throw err;
     }
   };
@@ -62,25 +46,21 @@ export default function Usuarios() {
 
   const handleUserSaved = async (userId: number, updateData: UpdateUserRequest) => {
     try {
-      await UserService.updateUser(userId, updateData);
-      await fetchUsers();
+      await onSave(userId, updateData);
       setDialogEditarOpen(false);
     } catch (err) {
       console.error("Error saving user:", err);
-      setError("Error al guardar usuario");
       throw err;
     }
   };
 
   const handleUserDeleted = async (userId: number) => {
     try {
-      await UserService.deleteUser(userId);
-      await fetchUsers();
+      await onDelete(userId);
       setDialogEditarOpen(false);
       setUsuarioEditando(null);
     } catch (err) {
       console.error("Error deleting user:", err);
-      setError("Error al eliminar usuario");
       throw err;
     }
   };
@@ -139,13 +119,12 @@ export default function Usuarios() {
       <AnalyticalTable
         columns={columns}
         data={dataFiltrada}
-        visibleRows={14}
+        visibleRows={10}
         sortable={true}
         scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
           width: "100%",
-          backgroundColor: "white",
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",
           borderRadius: "8px"
         }}
