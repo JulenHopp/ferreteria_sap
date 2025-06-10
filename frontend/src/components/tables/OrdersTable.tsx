@@ -5,20 +5,24 @@ import {
   Select,
   Option,
   BusyIndicator,
-  Text
+  Text,
+  Button
 } from "@ui5/webcomponents-react";
-import { Order } from "../../services/api/order.service";
+import { Order, CreateOrderRequest } from "../../services/api/order.service";
+import AddOrder from "../popups/orders/AddOrder";
 
 interface OrdersTableProps {
   data: Order[];
   loading: boolean;
   error: string | null;
   onStatusChange: (orderId: number, newStatus: string) => Promise<void>;
+  onCreateOrder: (orderData: CreateOrderRequest) => Promise<void>;
 }
 
-export default function OrdersTable({ data, loading, error, onStatusChange }: OrdersTableProps) {
+export default function OrdersTable({ data, loading, error, onStatusChange, onCreateOrder }: OrdersTableProps) {
   const [filtro, setFiltro] = useState("");
   const [estatus, setEstatus] = useState("");
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   const columns = [
     { Header: "Proveedor", accessor: "PROVEEDOR" },
@@ -74,7 +78,7 @@ export default function OrdersTable({ data, loading, error, onStatusChange }: Or
       {/* Filtros */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>
         <Input
-          placeholder="Filtrar por nombre"
+          placeholder="Filtrar por producto"
           value={filtro}
           onInput={(e) => setFiltro(((e.target as unknown) as HTMLInputElement).value)}
           style={{ width: "250px" }}
@@ -88,6 +92,7 @@ export default function OrdersTable({ data, loading, error, onStatusChange }: Or
           <Option value="En Curso">En Curso</Option>
           <Option value="Finalizada">Finalizada</Option>
         </Select>
+        <Button onClick={() => setIsAddDialogOpen(true)}>Crear Orden</Button>
       </div>
 
       {/* Tabla */}
@@ -95,13 +100,19 @@ export default function OrdersTable({ data, loading, error, onStatusChange }: Or
         columns={columns}
         data={dataFiltrada}
         visibleRows={10}
-        scaleWidthMode="Grow"
+        scaleWidthMode="Smart"
         noDataText="No hay datos disponibles"
         style={{
           width: "100%",
           boxShadow: "0 0 10px rgba(0,0,0,0.1)",
           borderRadius: "8px",
         }}
+      />
+
+      <AddOrder
+        isOpen={isAddDialogOpen}
+        onClose={() => setIsAddDialogOpen(false)}
+        onSave={onCreateOrder}
       />
     </div>
   );

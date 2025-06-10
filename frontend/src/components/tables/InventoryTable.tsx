@@ -55,7 +55,7 @@ export default function InventoryTable({ data, loading, error, onSave }: Invento
     <div style={{ width: "100%" }}>
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.5rem" }}>
         <Input
-          placeholder="Buscar por nombre"
+          placeholder="Buscar por producto"
           value={filtro}
           onInput={(e) => setFiltro((e.target as unknown as HTMLInputElement).value)}
           style={{ width: "250px" }}
