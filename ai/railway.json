@@ -1,0 +1,12 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksConfig": {
+      "phases": {
+        "install": {
+          "cmds": ["pip install -r requirements.txt"]
+        }
+      }
+    }
+  }
+}
