@@ -1,7 +1,6 @@
 import { apiClient } from './client';
 import { API_ENDPOINTS } from './endpoints';
 
-// Types
 export interface Order {
   ID: number;
   CANTIDAD: number;
@@ -23,6 +22,17 @@ export interface UpdateOrderStatusRequest {
   estado_id: number;
 }
 
+export interface CreateOrderRequest {
+  usuario_id: number;
+  estado_id: number;
+  proveedor_id: number;
+  producto_id: number;
+  cantidad: number;
+  precio_unitario: string;
+  costo_total: string;
+  sugerida_por_ia: boolean;
+}
+
 export class OrderService {
   static async getAllOrders(): Promise<Order[]> {
     console.log('Fetching orders from:', API_ENDPOINTS.order.all_orders);
@@ -32,6 +42,18 @@ export class OrderService {
       return response;
     } catch (error) {
       console.error('Error fetching orders:', error);
+      throw error;
+    }
+  }
+
+  static async createOrder(orderData: CreateOrderRequest): Promise<Order> {
+    console.log('Creating order:', orderData);
+    try {
+      const response = await apiClient.post<Order>(API_ENDPOINTS.order.create, orderData);
+      console.log('Create order response:', response);
+      return response;
+    } catch (error) {
+      console.error('Error creating order:', error);
       throw error;
     }
   }

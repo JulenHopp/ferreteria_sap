@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { OrderService, Order } from "../../services/api/order.service";
+import { OrderService, Order, CreateOrderRequest } from "../../services/api/order.service";
 import OrdersTable from "../tables/OrdersTable";
 import OrdersAnalytics from "../analytics/OrdersAnalytics";
 
@@ -49,6 +49,17 @@ export default function OrdersTab() {
     }
   };
 
+  const handleCreateOrder = async (orderData: CreateOrderRequest) => {
+    try {
+      await OrderService.createOrder(orderData);
+      await fetchOrders(); // Refresh data after creation
+    } catch (err) {
+      console.error("Error creating order:", err);
+      setError("Error al crear la orden");
+      throw err;
+    }
+  };
+
   return (
     <div style={{ 
       display: 'flex', 
@@ -66,6 +77,7 @@ export default function OrdersTab() {
           loading={loading}
           error={error}
           onStatusChange={handleStatusChange}
+          onCreateOrder={handleCreateOrder}
         />
       </div>
     </div>

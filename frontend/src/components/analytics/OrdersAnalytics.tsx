@@ -7,7 +7,6 @@ interface OrdersAnalyticsProps {
 }
 
 export default function OrdersAnalytics({ data }: OrdersAnalyticsProps) {
-  // Calculate metrics
   const totalOrders = data.length;
   const totalCost = data.reduce((sum, order) => sum + parseFloat(order.COSTO_TOTAL), 0).toFixed(2);
   const approvedOrders = data.filter(order => order.ESTADOS === 'Aprobada').length;
@@ -22,7 +21,7 @@ export default function OrdersAnalytics({ data }: OrdersAnalyticsProps) {
         />
         <MetricCard 
           label="Costo Total" 
-          value={`$${totalCost}`} 
+          value={`$${Number(totalCost).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`} 
         />
         <MetricCard 
           label="Órdenes Aprobadas" 

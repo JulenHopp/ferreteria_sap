@@ -19,7 +19,7 @@ const ordenesSugeridadIaModel = {
   }) => {
     return new Promise((resolve, reject) => {
       const query = `
-        INSERT INTO Ordenes_sugeridad_ia
+        INSERT INTO Ordenes_sugeridas_ia
         (producto_id, cantidad_sugerida, razon, estado_id, proveedor_id, creada_en)
         VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
       `;

@@ -22,6 +22,17 @@ export const API_ENDPOINTS = {
   // Order endpoints
   order: {
     all_orders: '/api/ordenes/with-details',
+    create: '/api/ordenes', // POST
     update_status: (orderId: number) => `/api/ordenes/${orderId}/estado` // PATCH
+  },
+
+  // Supplier endpoints
+  supplier: {
+    all_suppliers: '/api/proveedores' // GET
+  },
+
+  // Product endpoints
+  product: {
+    all_products: '/api/productos' // GET
   }
 } as const;
