@@ -36,10 +36,11 @@ class ProductoInput(BaseModel):
     ubicacion: str
     descripcion: str
 
-@app.post("/predict_batch")
+@app.post("/predict")
 def predict_batch(productos: List[ProductoInput]):
     # Convertimos a DataFrame
     df = pd.DataFrame([p.dict() for p in productos])
+    print("Paso aqui")
 
     # Renombrar columnas a mayúsculas
     df.columns = [col.upper() for col in df.columns]

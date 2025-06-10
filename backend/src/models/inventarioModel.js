@@ -19,6 +19,15 @@ const inventarioModel = {
     })
   },
 
+  getAllForIa: async () => {
+    return new Promise((resolve, reject) => {
+    db.exec("SELECT * FROM INVENTARIO_FOR_IA", (err, result) => {
+      if (err) return reject(err);
+      resolve(result);
+    })
+    })
+  },
+
   create: async ({ producto_id, cantidad, ubicacion }) => {
     return new Promise((resolve, reject) => {
       const query = `
