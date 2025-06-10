@@ -27,8 +27,9 @@ const iaService = {
       }));
 
       // 3. Enviar al endpoint de predicción
-      const response  = await axios.post('http://localhost:8000/predict', datosModelo);
-      const predicciones = await response.data;
+      const iaApiUrl = process.env.IA_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${iaApiUrl}/predict`, datosModelo);
+      const predicciones = response.data;
 
       // 4. Guardar solo los productos con refill sugerido
       const resultados = [];

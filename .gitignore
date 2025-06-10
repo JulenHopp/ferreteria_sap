@@ -2,4 +2,7 @@
 .DS_STORE
 *.env
 *node_modules
-*.pkl
+*venv/
+*__pycache__/
+*.ipynb_checkpoints/
+*.pyc
